@@ -1,5 +1,4 @@
 import { Stack } from "expo-router";
-import "../../global.css";
 
 export default function Layout() {
   return (
@@ -7,8 +6,6 @@ export default function Layout() {
       screenOptions={{
         headerShown: false,
       }}
-    >
-      <Stack.Screen name="(app)" />
-    </Stack>
+    ></Stack>
   );
 }
