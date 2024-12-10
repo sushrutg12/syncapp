@@ -1,7 +1,26 @@
-import { Stack } from "expo-router";
+import { fonts } from "@/constants/fonts";
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
+import { VideoView } from "expo-video";
+import { cssInterop } from "nativewind";
+import { useEffect } from "react";
 import "../../global.css";
 
+cssInterop(VideoView, { className: { target: "style" } });
+
 export default function Layout() {
+  const [loaded, error] = useFonts(fonts);
+
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
+  if (!loaded && !error) {
+    return null;
+  }
+
   return (
     <Stack
       screenOptions={{
