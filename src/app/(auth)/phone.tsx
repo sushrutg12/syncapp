@@ -1,7 +1,7 @@
 import { Fab } from "@/components/fab";
 import { StackHeader } from "@/components/stack-header";
-import { router } from "expo-router";
-import { useMemo, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import { useMemo, useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -14,6 +14,7 @@ import colors from "tailwindcss/colors";
 
 export default function Page() {
   const [phone, setPhone] = useState("");
+  const phoneRef = useRef<TextInput>(null);
 
   const handlePhoneChange = (text: string) => {
     setPhone(text);
@@ -29,6 +30,10 @@ export default function Page() {
       params: { phone },
     });
   };
+
+  useFocusEffect(() => {
+    phoneRef.current?.focus();
+  });
 
   return (
     <KeyboardAvoidingView
@@ -58,6 +63,7 @@ export default function Page() {
             value={phone}
             onChangeText={handlePhoneChange}
             maxLength={16}
+            ref={phoneRef}
           />
         </View>
         <View className="items-end">
