@@ -1,4 +1,5 @@
 import { fonts } from "@/constants/fonts";
+import { AuthProvider } from "@/store/auth";
 import { Ionicons } from "@expo/vector-icons";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
@@ -30,13 +31,15 @@ export default function Layout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="(app)" />
-      </Stack>
+      <AuthProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="(app)" />
+        </Stack>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
