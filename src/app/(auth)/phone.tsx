@@ -1,3 +1,4 @@
+import { useSignInWithOtp } from "@/api/auth";
 import { Fab } from "@/components/fab";
 import { StackHeader } from "@/components/stack-header";
 import { router, useFocusEffect } from "expo-router";
@@ -15,8 +16,18 @@ import colors from "tailwindcss/colors";
 export default function Page() {
   const [phone, setPhone] = useState("");
   const phoneRef = useRef<TextInput>(null);
+  const {
+    mutate: signInWithOtp,
+    isPending,
+    isError,
+    error,
+    reset,
+  } = useSignInWithOtp();
 
   const handlePhoneChange = (text: string) => {
+    if (isError) {
+      reset();
+    }
     setPhone(text);
   };
 
@@ -25,9 +36,12 @@ export default function Page() {
   }, [phone]);
 
   const handleSubmit = () => {
-    router.push({
-      pathname: "/otp",
-      params: { phone },
+    signInWithOtp(phone, {
+      onSuccess: () =>
+        router.push({
+          pathname: "/otp",
+          params: { phone },
+        }),
     });
   };
 
@@ -65,9 +79,18 @@ export default function Page() {
             maxLength={16}
             ref={phoneRef}
           />
+          {isError && (
+            <Text className="text-red-500 text-sm text-center mt-4">
+              {error.message}
+            </Text>
+          )}
         </View>
         <View className="items-end">
-          <Fab disabled={!isValid} onPress={handleSubmit} />
+          <Fab
+            disabled={!isValid || isPending}
+            onPress={handleSubmit}
+            loading={isPending}
+          />
         </View>
       </View>
     </KeyboardAvoidingView>

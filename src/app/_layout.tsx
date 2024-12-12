@@ -1,5 +1,6 @@
 import { fonts } from "@/constants/fonts";
 import { Ionicons } from "@expo/vector-icons";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { VideoView } from "expo-video";
@@ -11,6 +12,8 @@ cssInterop(VideoView, { className: { target: "style" } });
 cssInterop(Ionicons, { className: { target: "style" } });
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 export default function Layout() {
   const [loaded, error] = useFonts(fonts);
@@ -26,12 +29,14 @@ export default function Layout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="(app)" />
-    </Stack>
+    <QueryClientProvider client={queryClient}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="(app)" />
+      </Stack>
+    </QueryClientProvider>
   );
 }
