@@ -2,7 +2,7 @@ import { useMyProfile } from "@/api/my-profile";
 import { Card } from "@/components/card";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { Link, Stack } from "expo-router";
+import { Link, router, Stack } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HingeLogo from "~/assets/images/hinge-logo.svg";
@@ -27,7 +27,10 @@ export default function Page() {
           </View>
         </View>
         <View className="items-center gap-2 my-12">
-          <Pressable className="h-32 aspect-square rounded-full border-4 border-fuchsia-900 p-1">
+          <Pressable
+            className="h-32 aspect-square rounded-full border-4 border-fuchsia-900 p-1"
+            onPress={() => router.push("/profile")}
+          >
             <Image
               source={profile?.avatar_url}
               className="flex-1 rounded-full bg-neutral-400"

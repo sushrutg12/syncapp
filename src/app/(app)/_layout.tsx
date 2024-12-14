@@ -24,6 +24,10 @@ export default function Layout() {
         name="settings"
         options={{ animation: "slide_from_bottom" }}
       />
+      <Stack.Screen
+        name="profile"
+        options={{ animation: "slide_from_bottom" }}
+      />
     </Stack>
   );
 }
