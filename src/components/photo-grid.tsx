@@ -199,6 +199,7 @@ export const PhotoGrid: FC<Props> = ({
     <View
       style={{
         width: containerWidth,
+        alignSelf: "center",
       }}
     >
       <DraggableGrid

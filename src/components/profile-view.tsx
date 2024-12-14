@@ -38,7 +38,7 @@ export const ProfileView: FC<Props> = ({ profile }) => {
         const item = photos[photoIndex++];
         elements.push(<ProfilePhoto key={`p${item.id}`} photo={item} />);
       }
-      if (item === "answer") {
+      if (item === "answer" && answerIndex < answers.length) {
         const item = answers[answerIndex++];
         elements.push(<ProfileAnswer key={`a${item.id}`} answer={item} />);
       }
