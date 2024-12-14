@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PrivateProfile } from "./types";
 
 export const useMyProfile = () => {
-  return useQuery({
+  return useQuery<PrivateProfile | null>({
     queryKey: ["myProfile"],
     queryFn: async () => {
       let { data, error } = await supabase
