@@ -1,11 +1,14 @@
 import { useMyProfile } from "@/api/my-profile";
 import { StackHeaderV3 } from "@/components/stack-header-v3";
 import { MaterialTopTabs } from "@/layouts/material-top-tabs";
+import { useEdit } from "@/store/edit";
 import { router, Stack } from "expo-router";
 import colors from "tailwindcss/colors";
 
 export default function Layout() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: profile } = useMyProfile();
+  const { edits } = useEdit();
 
   const handlePressCancel = async () => {
     router.dismiss();
@@ -17,7 +20,7 @@ export default function Layout() {
   return (
     <>
       <StackHeaderV3
-        title={profile?.first_name || ""}
+        title={edits?.first_name || ""}
         onPressCancel={handlePressCancel}
         onPressDone={handlePresDone}
       />
