@@ -8,7 +8,7 @@ import colors from "tailwindcss/colors";
 export default function Layout() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: profile } = useMyProfile();
-  const { edits } = useEdit();
+  const { edits, gridActive } = useEdit();
 
   const handlePressCancel = async () => {
     router.dismiss();
@@ -36,6 +36,7 @@ export default function Layout() {
           },
           tabBarActiveTintColor: colors.fuchsia[900],
           tabBarInactiveTintColor: colors.neutral[300],
+          swipeEnabled: !gridActive,
         }}
       >
         <Stack.Screen

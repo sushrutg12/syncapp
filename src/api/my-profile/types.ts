@@ -27,13 +27,13 @@ export interface PrivateProfile {
   avatar_url: string;
 }
 
-interface Photo {
+export interface Photo {
   id: string;
   photo_url: string;
   photo_order: number;
 }
 
-interface Answer {
+export interface Answer {
   id: string;
   question: string;
   prompt_id: number;
@@ -41,7 +41,7 @@ interface Answer {
   answer_order: number;
 }
 
-interface Option {
+export interface Option {
   id: number;
   name: string;
   plural_name?: string;
