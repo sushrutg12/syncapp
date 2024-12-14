@@ -18,6 +18,12 @@ export default function Layout() {
       screenOptions={{
         headerShown: false,
       }}
-    ></Stack>
+    >
+      <Stack.Screen name="(tabs)" options={{ animation: "none" }} />
+      <Stack.Screen
+        name="settings"
+        options={{ animation: "slide_from_bottom" }}
+      />
+    </Stack>
   );
 }
