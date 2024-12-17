@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import * as Crypto from "expo-crypto";
 import { PrivateProfile } from "./types";
 
 export const useMyProfile = () => {
@@ -21,16 +22,64 @@ export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
+    mutationKey: ["updateProfile"],
     mutationFn: async (profile: PrivateProfile) => {
       const answers = profile.answers.map(
         ({ id, prompt_id, answer_text, answer_order }) => {
-          return { id, prompt_id, answer_text, answer_order };
+          return {
+            id: id.startsWith("temp") ? null : id,
+            prompt_id,
+            answer_text,
+            answer_order,
+          };
         }
       );
 
-      const photos = profile.photos.map(({ id, photo_url, photo_order }) => {
-        return { id, photo_url, photo_order };
-      });
+      const uploadPhoto = async (photoUrl: string) => {
+        const arraybuffer = await fetch(photoUrl).then((res) =>
+          res.arrayBuffer()
+        );
+        const fileExt = photoUrl.split(".").pop()?.toLowerCase() ?? "jpeg";
+        const filePath = `${
+          profile.id
+        }/photos/${Crypto.randomUUID()}.${fileExt}`;
+
+        const { error } = await supabase.storage
+          .from("profiles")
+          .upload(filePath, arraybuffer, {
+            contentType: `image/${fileExt}`,
+          });
+
+        if (error) {
+          throw error;
+        }
+
+        const { data } = supabase.storage
+          .from("profiles")
+          .getPublicUrl(filePath);
+
+        if (!data?.publicUrl) {
+          throw error;
+        }
+
+        return data.publicUrl;
+      };
+
+      const photos = await Promise.all(
+        profile.photos.map(async ({ id, photo_url, photo_order }) => {
+          let photoUrl = photo_url;
+
+          if (photoUrl.startsWith("file://")) {
+            photoUrl = await uploadPhoto(photoUrl);
+          }
+
+          return {
+            id: id.startsWith("temp") ? null : id,
+            photo_url: photoUrl,
+            photo_order,
+          };
+        })
+      );
 
       let { error } = await supabase.rpc("update_profile", {
         answers: answers,
