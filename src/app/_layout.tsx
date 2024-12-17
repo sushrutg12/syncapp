@@ -8,11 +8,13 @@ import { SplashScreen, Stack } from "expo-router";
 import { VideoView } from "expo-video";
 import { cssInterop } from "nativewind";
 import { useEffect } from "react";
+import MapView from "react-native-maps";
 import "../../global.css";
 
 cssInterop(VideoView, { className: { target: "style" } });
 cssInterop(Ionicons, { className: { target: "style" } });
 cssInterop(Image, { className: { target: "style" } });
+cssInterop(MapView, { className: { target: "style" } });
 
 SplashScreen.preventAutoHideAsync();
 
