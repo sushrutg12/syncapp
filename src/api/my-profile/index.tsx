@@ -134,6 +134,7 @@ export const useUpdateAgeRange = () => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+      await queryClient.invalidateQueries({ queryKey: ["profiles"] });
     },
   });
 };
@@ -153,6 +154,7 @@ export const useUpdateDistance = () => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+      await queryClient.invalidateQueries({ queryKey: ["profiles"] });
     },
   });
 };
@@ -172,6 +174,7 @@ export const useUpdateEthnicityPreferences = () => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+      await queryClient.invalidateQueries({ queryKey: ["profiles"] });
     },
   });
 };
@@ -180,12 +183,7 @@ export const useUpdateGenderPreferences = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      genders,
-    }: {
-      profileId: string;
-      genders: number[];
-    }) => {
+    mutationFn: async ({ genders }: { genders: number[] }) => {
       const { error } = await supabase.rpc("update_gender_preferences", {
         gender_preferences: genders,
       });
@@ -196,6 +194,7 @@ export const useUpdateGenderPreferences = () => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+      await queryClient.invalidateQueries({ queryKey: ["profiles"] });
     },
   });
 };
@@ -225,6 +224,7 @@ export const useUpdateLocation = () => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+      await queryClient.invalidateQueries({ queryKey: ["profiles"] });
     },
   });
 };
