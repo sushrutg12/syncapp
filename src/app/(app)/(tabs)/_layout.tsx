@@ -25,6 +25,8 @@ export default function Layout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home-outline" color={color} size={size} />
           ),
+          headerTitle: "",
+          headerShadowVisible: false,
         }}
       />
       <Tabs.Screen

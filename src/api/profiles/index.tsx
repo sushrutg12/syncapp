@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Like, PublicProfile } from "./types";
 
-export const useProfiles = (page_size: number) => {
+export const useProfiles = (page_size: number = 10) => {
   return useQuery<PublicProfile[]>({
     queryKey: ["profiles", page_size],
     queryFn: async () => {

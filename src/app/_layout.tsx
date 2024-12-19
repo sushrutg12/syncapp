@@ -7,6 +7,7 @@ import { useFonts } from "expo-font";
 import { Image } from "expo-image";
 import { SplashScreen, Stack } from "expo-router";
 import { VideoView } from "expo-video";
+import LottieView from "lottie-react-native";
 import { cssInterop } from "nativewind";
 import { useEffect } from "react";
 import MapView from "react-native-maps";
@@ -17,6 +18,7 @@ cssInterop(Ionicons, { className: { target: "style" } });
 cssInterop(Image, { className: { target: "style" } });
 cssInterop(MapView, { className: { target: "style" } });
 cssInterop(Checkbox, { className: { target: "style" } });
+cssInterop(LottieView, { className: { target: "style" } });
 
 SplashScreen.preventAutoHideAsync();
 

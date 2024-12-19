@@ -1,15 +1,18 @@
 import { Profile } from "@/types/profile";
 import { FC } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, Text } from "react-native";
 import { ProfileAnswer } from "./profile-answer";
+import { ProfileItem } from "./profile-item";
 import { ProfilePhoto } from "./profile-photo";
 import { ProfileTraits } from "./profile-traits";
 
 interface Props {
   profile: Profile;
+  myProfile?: boolean;
+  onLike?: (id: string, type: "answer" | "photo") => void;
 }
 
-export const ProfileView: FC<Props> = ({ profile }) => {
+export const ProfileView: FC<Props> = ({ profile, myProfile, onLike }) => {
   const generateProfile = (): JSX.Element[] => {
     const elements: JSX.Element[] = [];
 
@@ -36,11 +39,29 @@ export const ProfileView: FC<Props> = ({ profile }) => {
       }
       if (item === "photo" && photoIndex < photos.length) {
         const item = photos[photoIndex++];
-        elements.push(<ProfilePhoto key={`p${item.id}`} photo={item} />);
+        elements.push(
+          <ProfileItem
+            key={`p${item.id}`}
+            onLike={onLike}
+            item={item}
+            type="photo"
+          >
+            <ProfilePhoto photo={item} />
+          </ProfileItem>
+        );
       }
       if (item === "answer" && answerIndex < answers.length) {
         const item = answers[answerIndex++];
-        elements.push(<ProfileAnswer key={`a${item.id}`} answer={item} />);
+        elements.push(
+          <ProfileItem
+            key={`a${item.id}`}
+            onLike={onLike}
+            item={item}
+            type="answer"
+          >
+            <ProfileAnswer answer={item} />
+          </ProfileItem>
+        );
       }
     });
 
@@ -52,6 +73,11 @@ export const ProfileView: FC<Props> = ({ profile }) => {
       contentContainerClassName="pt-5 pb-28 gap-5"
       showsVerticalScrollIndicator={false}
     >
+      {!myProfile && (
+        <Text className="text-3xl  font-poppins-semibold">
+          {profile.first_name}
+        </Text>
+      )}
       {generateProfile()}
     </ScrollView>
   );
