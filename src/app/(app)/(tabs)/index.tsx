@@ -8,6 +8,7 @@ import { Empty } from "@/components/empty";
 import { Fab } from "@/components/fab";
 import { Loader } from "@/components/loader";
 import { ProfileView } from "@/components/profile-view";
+import { useRefreshOnFocus } from "@/hooks/refetch";
 import { transformPublicProfile } from "@/utils/profile";
 import { Ionicons } from "@expo/vector-icons";
 import { useQueryClient } from "@tanstack/react-query";
@@ -17,6 +18,8 @@ import { Alert, ScrollView, View } from "react-native";
 
 export default function Page() {
   const { data, isFetching, error, refetch } = useProfiles();
+  useRefreshOnFocus(refetch);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const { mutate: skip, isPending: skipPending } = useSkipProfile();
   const { mutate: review, isPending: reviewPending } = useReviewProfiles();
