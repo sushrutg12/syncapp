@@ -50,11 +50,11 @@ export default function Page() {
               "Something went wrong, please try again later."
             );
             reset();
-            router.back();
           },
         }
       );
     }
+    router.back();
   };
 
   return (

@@ -1,7 +1,8 @@
 import { LocationData } from "@/types/location";
+import { openSettings } from "expo-linking";
 import * as Location from "expo-location";
 import { FC, useEffect, useState } from "react";
-import { Alert, Text, View } from "react-native";
+import { Alert, Platform, Text, View } from "react-native";
 import MapView, { Details, Region } from "react-native-maps";
 
 const DEFAULT_DELTA = {
@@ -36,6 +37,10 @@ export const LocationView: FC<Props> = ({ location, onLocationChange }) => {
   }, []);
 
   const onRegionChangeComplete = async (region: Region, details: Details) => {
+    if (Platform.OS === "android" && !details.isGesture) {
+      return;
+    }
+
     if (
       region.latitudeDelta > MIN_DELTA.latitudeDelta ||
       region.longitudeDelta > MIN_DELTA.longitudeDelta
@@ -78,6 +83,9 @@ export const LocationView: FC<Props> = ({ location, onLocationChange }) => {
         case "E_RATE_EXCEEDED":
           Alert.alert("Error", "Too many requests. Please try again later;");
           break;
+        case "ERR_LOCATION_UNAUTHORIZED":
+          getPermissions();
+          break;
         default:
           Alert.alert("Error", "Something went wrong. Please try again later;");
           break;
@@ -85,10 +93,41 @@ export const LocationView: FC<Props> = ({ location, onLocationChange }) => {
     }
   };
 
+  const getPermissions = async () => {
+    const { status: existingStatus } =
+      await Location.getForegroundPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== "granted") {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus !== "granted") {
+      Alert.alert(
+        "Allow Location Access",
+        "Please enable Location Services so we can introduce you to new people near you.",
+        [
+          {
+            text: "Cancel",
+          },
+          {
+            text: "Settings",
+            onPress: () => {
+              openSettings();
+            },
+          },
+        ]
+      );
+      return;
+    }
+  };
+
   return (
     <View className="w-full h-3/5 justify-center items-center">
       <MapView
         className="w-full h-full"
+        initialRegion={region}
         region={region}
         onRegionChangeComplete={onRegionChangeComplete}
       />
