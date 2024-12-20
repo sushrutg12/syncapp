@@ -4,7 +4,7 @@ import { ProfileView } from "@/components/profile-view";
 import { transformPublicProfile } from "@/utils/profile";
 import { Image } from "expo-image";
 import { Redirect, Stack, router, useLocalSearchParams } from "expo-router";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { Alert, Pressable, ScrollView, Text, View } from "react-native";
 
 const Page = () => {
   const { id } = useLocalSearchParams();
@@ -52,13 +52,14 @@ const Page = () => {
       <Stack.Screen
         options={{
           headerLeft: () => (
-            <Text
-              className="text-base font-poppins-medium"
-              onPress={() => router.back()}
-              suppressHighlighting
-            >
-              All
-            </Text>
+            <Pressable onPressOut={() => router.back()}>
+              <Text
+                className="text-base font-poppins-medium"
+                suppressHighlighting
+              >
+                All
+              </Text>
+            </Pressable>
           ),
           title: "",
           headerShadowVisible: false,

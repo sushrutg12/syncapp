@@ -20,12 +20,12 @@ export const StackHeaderV3: FC<Props> = ({
         title: title,
         headerTitleAlign: "center",
         headerLeft: () => (
-          <Pressable onPress={onPressCancel}>
+          <Pressable onPressOut={onPressCancel}>
             <Text className="font-semibold text-fuchsia-900">Cancel</Text>
           </Pressable>
         ),
         headerRight: () => (
-          <Pressable onPress={onPressDone}>
+          <Pressable onPressOut={onPressDone}>
             <Text className="font-semibold text-fuchsia-900">Done</Text>
           </Pressable>
         ),

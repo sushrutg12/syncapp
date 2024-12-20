@@ -9,7 +9,7 @@ import {
 } from "@sendbird/uikit-react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
-import { Alert, Text, View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 
 const CustomHeader = () => {
   const { headerTitle } = useContext(GroupChannelContexts.Fragment);
@@ -21,21 +21,21 @@ const CustomHeader = () => {
       options={{
         headerLeft: () => (
           <View className="flex-row items-center gap-2">
-            <Ionicons
-              name="chevron-back"
-              className="text-2xl"
-              onPress={() => router.back()}
-              suppressHighlighting
-            />
+            <Pressable onPressOut={() => router.back()}>
+              <Ionicons
+                name="chevron-back"
+                className="text-2xl"
+                suppressHighlighting
+              />
+            </Pressable>
+
             <Text className="text-lg font-poppins-medium">{headerTitle}</Text>
           </View>
         ),
         title: "",
         headerRight: () => (
-          <Ionicons
-            name="cut-outline"
-            className="text-2xl"
-            onPress={() => {
+          <Pressable
+            onPressOut={() => {
               Alert.alert(
                 "Are you sure?",
                 `Unmatching will delete the match for both you and ${headerTitle}`,
@@ -63,8 +63,13 @@ const CustomHeader = () => {
                 ]
               );
             }}
-            suppressHighlighting
-          />
+          >
+            <Ionicons
+              name="cut-outline"
+              className="text-2xl"
+              suppressHighlighting
+            />
+          </Pressable>
         ),
       }}
     />
