@@ -49,12 +49,10 @@ export default function Page() {
           }),
       });
     } else {
-      // If not valid, skip phone number validation and navigate directly to OTP screen (or desired skip destination)
-      console.log("Skipping phone number validation step.");
-      // Navigate to OTP screen even if phone number is invalid,
-      // The OTP screen logic will handle the final skip if needed.
-      // Pass an empty phone param or handle it in otp.tsx
-      router.push({ pathname: "/otp", params: { phone: "" } });
+      // If not valid, skip OTP and navigate elsewhere
+      // *** Replace '/home' with the actual route you want to navigate to when skipping ***
+      console.log("Skipping phone authentication step.");
+      router.push("/otp"); // Using replace to avoid adding the phone screen to history
     }
   };
 

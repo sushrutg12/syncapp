@@ -1,8 +1,7 @@
 import { useVerifyOtp } from "@/api/auth";
 import { Fab } from "@/components/fab";
 import { StackHeader } from "@/components/stack-header";
-// Make sure router is imported
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -16,8 +15,7 @@ import colors from "tailwindcss/colors";
 
 export default function Page() {
   const [otp, setOtp] = useState("");
-  // Make sure phone is handled even if we skipped the previous step
-  const { phone = "" } = useLocalSearchParams<{ phone?: string }>();
+  const { phone } = useLocalSearchParams<{ phone: string }>();
   const {
     mutate: verifyOtp,
     isPending,
@@ -34,22 +32,11 @@ export default function Page() {
   };
 
   const isValid = useMemo(() => {
-    // Keep the original validation logic
     return otp.length === 6;
   }, [otp]);
 
   const handleSubmit = () => {
-    // Check if the entered OTP is valid (6 digits)
-    if (isValid && phone) {
-      // If valid and we have a phone number (from the previous step), proceed with verification
-      verifyOtp({ phone, token: otp });
-      // Successful verification will trigger the redirect in (auth)/_layout.tsx
-    } else {
-      // If not valid, or phone is missing, skip OTP verification and navigate
-      // directly to the main app tabs route, mimicking the successful auth redirect.
-      console.log("Skipping OTP verification step. Navigating to main app.");
-      router.replace("/(app)/(tabs)");
-    }
+    verifyOtp({ phone, token: otp });
   };
 
   return (
@@ -78,7 +65,6 @@ export default function Page() {
               </View>
             ))}
           </View>
-          {/* Keep the hidden TextInput */}
           <TextInput
             className="absoulte h-1 w-1 opacity-0"
             style={
@@ -102,8 +88,7 @@ export default function Page() {
         </View>
         <View className="items-end">
           <Fab
-            // Button is disabled only when the verification mutation is pending
-            disabled={isPending}
+            disabled={!isValid || isPending}
             onPress={handleSubmit}
             loading={isPending}
           />

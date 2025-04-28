@@ -1,6 +1,6 @@
 import { useAuth } from "@/store/auth";
 import { EditProvider } from "@/store/edit";
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import { Text } from "react-native";
 
 export default function Layout() {
@@ -10,10 +10,9 @@ export default function Layout() {
     return <Text>Loading...</Text>;
   }
 
-  // TEMPORARY: Comment out auth check to allow access without login
-  // if (!session) {
-  //   return <Redirect href={"/sign-in"} />;
-  // }
+  if (!session) {
+    return <Redirect href={"/sign-in"} />;
+  }
 
   return (
     <EditProvider>
