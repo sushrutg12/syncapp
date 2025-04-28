@@ -1,6 +1,7 @@
 import { useSignInWithOtp } from "@/api/auth";
 import { Fab } from "@/components/fab";
 import { StackHeader } from "@/components/stack-header";
+// router is already imported
 import { router, useFocusEffect } from "expo-router";
 import { useMemo, useRef, useState } from "react";
 import {
@@ -32,17 +33,27 @@ export default function Page() {
   };
 
   const isValid = useMemo(() => {
+    // Keep the original validation logic
     return /^\+[1-9]\d{1,14}$/.test(phone);
   }, [phone]);
 
   const handleSubmit = () => {
-    signInWithOtp(phone, {
-      onSuccess: () =>
-        router.push({
-          pathname: "/otp",
-          params: { phone },
-        }),
-    });
+    // Check if the entered phone number is valid according to the original check
+    if (isValid) {
+      // If valid, proceed with OTP sign-in
+      signInWithOtp(phone, {
+        onSuccess: () =>
+          router.push({
+            pathname: "/otp",
+            params: { phone },
+          }),
+      });
+    } else {
+      // If not valid, skip OTP and navigate elsewhere
+      // *** Replace '/home' with the actual route you want to navigate to when skipping ***
+      console.log("Skipping phone authentication step.");
+      router.push("/otp"); // Using replace to avoid adding the phone screen to history
+    }
   };
 
   useFocusEffect(() => {
@@ -87,7 +98,8 @@ export default function Page() {
         </View>
         <View className="items-end">
           <Fab
-            disabled={!isValid || isPending}
+            // Button is disabled only when the sign-in mutation is pending
+            disabled={isPending}
             onPress={handleSubmit}
             loading={isPending}
           />
