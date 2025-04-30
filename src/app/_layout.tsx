@@ -50,7 +50,7 @@ export default function Layout() {
       <StatusBar style="light" backgroundColor="#1f2937" translucent={false} />
 
       {/* Wrap everything in a dark SafeAreaView */}
-      <SafeAreaView edges={["top", "bottom"]} className="flex-1 bg-gray-900">
+      <SafeAreaView edges={["top"]} className="flex-1 bg-gray-900">
         <SendbirdUIKitContainer
           appId={process.env.EXPO_PUBLIC_SENDBIRD_APP_ID!}
           chatOptions={{ localCacheStorage: AsyncStorage }}
