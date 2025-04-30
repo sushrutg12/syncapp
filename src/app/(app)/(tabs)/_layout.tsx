@@ -27,6 +27,12 @@ export default function Layout() {
         tabBarActiveTintColor: colors.white,
         tabBarInactiveTintColor: colors.neutral[500],
         tabBarShowLabel: false,
+        headerStyle: {
+          backgroundColor: colors.gray[900],
+        },
+        headerTitleStyle: {
+          color: colors.white,
+        },
       }}
     >
       <Tabs.Screen
