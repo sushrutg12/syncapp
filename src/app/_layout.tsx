@@ -1,3 +1,4 @@
+// app/_layout.tsx
 import { fonts } from "@/constants/fonts";
 import { platformServices } from "@/lib/sendbird";
 import { AuthProvider } from "@/store/auth";
@@ -14,7 +15,10 @@ import LottieView from "lottie-react-native";
 import { cssInterop } from "nativewind";
 import { useEffect } from "react";
 import MapView from "react-native-maps";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native-safe-area-context";
 import "../../global.css";
+import React from "react";
 
 cssInterop(VideoView, { className: { target: "style" } });
 cssInterop(Ionicons, { className: { target: "style" } });
@@ -41,33 +45,41 @@ export default function Layout() {
   }
 
   return (
-    <SendbirdUIKitContainer
-      appId={process.env.EXPO_PUBLIC_SENDBIRD_APP_ID!}
-      chatOptions={{ localCacheStorage: AsyncStorage }}
-      platformServices={platformServices}
-    >
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen
-              name="(app)"
-              options={{
-                animation: "none",
-              }}
-            />
-            <Stack.Screen
-              name="(auth)"
-              options={{
-                animation: "none",
-              }}
-            />
-          </Stack>
-        </AuthProvider>
-      </QueryClientProvider>
-    </SendbirdUIKitContainer>
+    <>
+      {/* Paint the native status bar to match your dark theme */}
+      <StatusBar style="light" backgroundColor="#1f2937" translucent={false} />
+
+      {/* Wrap everything in a dark SafeAreaView */}
+      <SafeAreaView edges={["top", "bottom"]} className="flex-1 bg-gray-900">
+        <SendbirdUIKitContainer
+          appId={process.env.EXPO_PUBLIC_SENDBIRD_APP_ID!}
+          chatOptions={{ localCacheStorage: AsyncStorage }}
+          platformServices={platformServices}
+        >
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+              <Stack
+                screenOptions={{
+                  headerShown: false,
+                }}
+              >
+                <Stack.Screen
+                  name="(app)"
+                  options={{
+                    animation: "none",
+                  }}
+                />
+                <Stack.Screen
+                  name="(auth)"
+                  options={{
+                    animation: "none",
+                  }}
+                />
+              </Stack>
+            </AuthProvider>
+          </QueryClientProvider>
+        </SendbirdUIKitContainer>
+      </SafeAreaView>
+    </>
   );
 }

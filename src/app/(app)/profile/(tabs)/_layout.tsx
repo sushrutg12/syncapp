@@ -4,6 +4,7 @@ import { MaterialTopTabs } from "@/layouts/material-top-tabs";
 import { useEdit } from "@/store/edit";
 import { router, Stack } from "expo-router";
 import { isEqual } from "lodash";
+import React from "react";
 import { Alert } from "react-native";
 import colors from "tailwindcss/colors";
 
