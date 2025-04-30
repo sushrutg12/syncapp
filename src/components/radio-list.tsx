@@ -38,7 +38,7 @@ export const RadioList: React.FC<Props> = ({
             className="py-5 flex-row justify-between"
             onPress={() => handleSelection(item)}
           >
-            <Text className="text-base font-poppins-regular">{item.name}</Text>
+            <Text className="text-white font-poppins-regular">{item.name}</Text>
             <Checkbox
               value={isChecked}
               color={isChecked ? colors.fuchsia[950] : colors.neutral[400]}

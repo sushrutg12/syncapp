@@ -13,7 +13,7 @@ export default function Page() {
           headerShown: false,
         }}
       />
-      <StatusBar barStyle={"light-content"} />
+      <StatusBar barStyle={"dark-content"} />
       <VideoBackground source={require("~/assets/images/background.mp4")}>
         <SafeAreaView className="flex-1 p-10">
           <View className="flex-1 items-center pt-14">

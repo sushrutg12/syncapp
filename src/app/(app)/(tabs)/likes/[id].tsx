@@ -48,13 +48,13 @@ const Page = () => {
   profile = transformPublicProfile(like.profile);
 
   return (
-    <View className="flex-1 px-5 bg-white">
+    <View className="flex-1 px-5 bg-gray-900">
       <Stack.Screen
         options={{
           headerLeft: () => (
             <Pressable onPressOut={() => router.back()}>
               <Text
-                className="text-base font-poppins-medium"
+                className="text-white font-poppins-medium"
                 suppressHighlighting
               >
                 All
@@ -81,21 +81,21 @@ const Page = () => {
       </ScrollView>
 
       <Fab
-        className="absolute bottom-5 left-5 bg-white  shadow-sm h-20"
-        iconClassName="text-black text-4xl"
+        className="absolute bottom-5 left-5 bg-gray-900  shadow-sm h-20"
+        iconClassName="text-whiite text-4xl"
         iconName="close"
         onPress={handleRemove}
         loading={removePending}
-        loaderClassName="text-black"
+        loaderClassName="text-whiite"
         disabled={removePending || matchPending}
       />
       <Fab
-        className="absolute bottom-5 right-5 bg-white  shadow-sm h-20"
-        iconClassName="text-black text-4xl"
+        className="absolute bottom-5 right-5 bg-gray-900  shadow-sm h-20"
+        iconClassName="text-whiite text-4xl"
         iconName="chatbox-outline"
         onPress={handleMatch}
         loading={matchPending}
-        loaderClassName="text-black"
+        loaderClassName="text-whiite"
         disabled={removePending || matchPending}
       />
     </View>

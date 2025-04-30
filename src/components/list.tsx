@@ -23,16 +23,16 @@ export const List: FC<Props> = ({ title, data, profile }) => {
       keyExtractor={(item) => item.title}
       ListHeaderComponent={() => {
         return (
-          <Text className="text-base font-poppins-semibold mb-2">{title}</Text>
+          <Text className="text-white font-poppins-semibold mb-2">{title}</Text>
         );
       }}
       renderItem={({ item }) => {
         return (
           <Link href={item.route as Href} asChild>
-            <Pressable className="flex-row items-center justify-between pr-5 border-b border-neutral-200 py-3">
+            <Pressable className="flex-row items-center justify-between pr-5 border-b border-neutral-700 py-3">
               <View>
                 <Text
-                  className={cn("text-base font-poppins-regular", {
+                  className={cn("text-white font-poppins-regular", {
                     "text-red-700":
                       ["Name", "Age", "Location", "Gender"].includes(
                         item.title
@@ -42,7 +42,7 @@ export const List: FC<Props> = ({ title, data, profile }) => {
                   {item.title}
                 </Text>
                 <Text
-                  className={cn("text-base font-poppins-light", {
+                  className={cn("text-white font-poppins-light", {
                     "text-red-700":
                       ["Name", "Age", "Location", "Gender"].includes(
                         item.title
@@ -52,7 +52,7 @@ export const List: FC<Props> = ({ title, data, profile }) => {
                   {item.getValue(profile!)}
                 </Text>
               </View>
-              <Ionicons name="chevron-forward" className="text-base  " />
+              <Ionicons name="chevron-forward" className="text-white  " />
             </Pressable>
           </Link>
         );

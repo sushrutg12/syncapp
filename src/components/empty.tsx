@@ -20,12 +20,12 @@ export const Empty: FC<Props> = ({
   secondaryText,
 }) => {
   return (
-    <SafeAreaView className="flex-1 p-5 bg-white justify-center gap-8">
+    <SafeAreaView className="flex-1 p-5 bg-gray-900 justify-center gap-8">
       <View className="gap-2">
         <Text className="text-2xl font-playfair-semibold text-center">
           {title}
         </Text>
-        <Text className="text-base font-poppins-light text-center">
+        <Text className="text-white font-poppins-light text-center">
           {subTitle}
         </Text>
       </View>
@@ -35,17 +35,17 @@ export const Empty: FC<Props> = ({
             className="h-14 bg-black items-center justify-center rounded-full w-full"
             onPress={onPrimaryPress}
           >
-            <Text className="text-white text-base font-poppins-medium">
+            <Text className="text-white text-white font-poppins-medium">
               {primaryText}
             </Text>
           </Pressable>
         )}
         {secondaryText && (
           <Pressable
-            className="h-14 bg-white items-center justify-center rounded-full border border-neutral-400"
+            className="h-14 bg-gray-900 items-center justify-center rounded-full border border-neutral-400"
             onPress={onSecondaryPress}
           >
-            <Text className="text-black text-base font-poppins-medium ">
+            <Text className="text-whiite text-white font-poppins-medium ">
               {secondaryText}
             </Text>
           </Pressable>

@@ -124,7 +124,7 @@ export default function Page() {
   }
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-gray-900">
       <ScrollView className="flex-1 px-5">
         <Link href={"/preferences"} suppressHighlighting>
           <Ionicons name="options-outline" className="text-3xl" />
@@ -134,9 +134,9 @@ export default function Page() {
       <Fab
         onPress={handleSkip}
         iconName="close"
-        className="bg-white shadow-sm active:h-[4.75rem] h-20 absolute bottom-5 left-5"
-        iconClassName="text-black text-4xl"
-        loaderClassName="text-black"
+        className="bg-gray-900 shadow-sm active:h-[4.75rem] h-20 absolute bottom-5 left-5"
+        iconClassName="text-whiite text-4xl"
+        loaderClassName="text-whiite"
       />
     </View>
   );

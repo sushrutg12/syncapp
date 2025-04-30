@@ -13,14 +13,14 @@ export default function Page() {
 
   const renderHeader = () => {
     return (
-      <View className="gap-5 bg-white ">
+      <View className="gap-5 bg-gray-900 ">
         <Text className="text-3xl font-poppins-semibold">Likes You</Text>
         {data.length > 0 && (
           <>
             <Link href={`/likes/${data[0].id}`} asChild>
-              <Pressable className="bg-white flex-1 rounded-lg overflow-hidden border border-neutral-200">
+              <Pressable className="bg-gray-900 flex-1 rounded-lg overflow-hidden border border-neutral-700">
                 <View className="p-4 gap-5">
-                  <Text className="text-base font-poppins-light">{`Liked your ${
+                  <Text className="text-white font-poppins-light">{`Liked your ${
                     data[0].photo_url ? "photo" : "answer"
                   }`}</Text>
                   <Text className="text-xl font-poppins-medium">
@@ -72,7 +72,7 @@ export default function Page() {
   };
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-gray-900">
       <FlatList
         data={data.length > 1 ? data.slice(1) : []}
         renderItem={({ item, index }) => {

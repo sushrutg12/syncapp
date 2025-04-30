@@ -39,7 +39,7 @@ export default function Page() {
   };
 
   return (
-    <View className="flex-1 bg-white p-5">
+    <View className="flex-1 bg-gray-900 p-5">
       <StackHeaderV4 title="Age" onPressBack={handlePress} />
       {(show || Platform.OS === "ios") && (
         <DateTimePicker

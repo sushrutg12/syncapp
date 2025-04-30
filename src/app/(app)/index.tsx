@@ -30,7 +30,7 @@ export default function Page() {
 
   if (isPending) {
     return (
-      <View className="flex-1 bg-white items-center justify-center">
+      <View className="flex-1 bg-gray-900 items-center justify-center">
         <ActivityIndicator size={"small"} />
       </View>
     );
@@ -38,7 +38,7 @@ export default function Page() {
 
   if (isError) {
     return (
-      <View className="flex-1 bg-white items-center justify-center">
+      <View className="flex-1 bg-gray-900 items-center justify-center">
         <Text>Something went wrong.</Text>
       </View>
     );

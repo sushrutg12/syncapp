@@ -35,7 +35,7 @@ const Page = () => {
   };
 
   return (
-    <View className="bg-white flex-1 p-5">
+    <View className="bg-gray-900 flex-1 p-5">
       <StackHeaderV4 title="Ethnicity" onPressBack={handlePress} />
       <CheckboxList
         options={data}

@@ -19,7 +19,7 @@ export const Card: FC<Props> = forwardRef<View, Props>(
           {icon}
         </View>
         <View>
-          <Text className="text-base font-poppins-medium">{title}</Text>
+          <Text className="text-white font-poppins-medium">{title}</Text>
           <Text className="text-sm font-poppins-light">{subtitle}</Text>
         </View>
       </Pressable>

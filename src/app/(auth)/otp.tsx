@@ -41,7 +41,7 @@ export default function Page() {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-white p-5"
+      className="flex-1 bg-gray-900 p-5"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={100}
     >

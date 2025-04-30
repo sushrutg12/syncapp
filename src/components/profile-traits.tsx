@@ -10,7 +10,7 @@ interface Props {
 
 export const ProfileTraits: FC<Props> = ({ profile }) => {
   return (
-    <View className="bg-white border border-neutral-200 rounded-lg">
+    <View className="bg-gray-900 border border-neutral-700 rounded-lg">
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {profile?.traits.map(({ key, icon, label }, index) => {
           if (!label) return null;

@@ -135,7 +135,7 @@ export const LocationView: FC<Props> = ({ location, onLocationChange }) => {
         className="bg-black absolute py-2 px-4 rounded-md"
         pointerEvents="none"
       >
-        <Text className="text-white text-base font-poppins-regular">
+        <Text className="text-white text-white font-poppins-regular">
           {neighborhood}
         </Text>
       </View>

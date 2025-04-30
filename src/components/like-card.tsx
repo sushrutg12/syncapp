@@ -10,9 +10,9 @@ interface Props {
 
 export const LikeCard: FC<Props> = ({ like: { photo_url, profile } }) => {
   return (
-    <View className="bg-white flex-1 rounded-lg overflow-hidden border border-neutral-200">
+    <View className="bg-gray-900 flex-1 rounded-lg overflow-hidden border border-neutral-700">
       <View className="p-4 gap-5">
-        <Text className="text-base font-poppins-light">{`Liked your ${
+        <Text className="text-white font-poppins-light">{`Liked your ${
           photo_url ? "photo" : "answer"
         }`}</Text>
         <Text className="text-xl font-poppins-medium">

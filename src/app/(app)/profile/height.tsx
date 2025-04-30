@@ -24,7 +24,7 @@ export default function Page() {
   };
 
   return (
-    <View className="flex-1 bg-white p-5">
+    <View className="flex-1 bg-gray-900 p-5">
       <StackHeaderV4 title="Height" onPressBack={handlePress} />
       <Picker
         selectedValue={selectedHeight}

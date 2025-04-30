@@ -38,7 +38,7 @@ export const CheckboxList: FC<Props> = ({
             className="flex-row justify-between py-5"
             onPress={() => toggleSelection(item)}
           >
-            <Text className="text-base font-poppins-regular">{item.name}</Text>
+            <Text className="text-white font-poppins-regular">{item.name}</Text>
             <Checkbox
               value={isChecked}
               color={isChecked ? colors.fuchsia[950] : colors.neutral[400]}

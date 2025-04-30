@@ -11,7 +11,7 @@ export default function Page() {
 
   if (!edits) {
     return (
-      <View className="flex-1 bg-white items-center justify-center">
+      <View className="flex-1 bg-gray-900 items-center justify-center">
         <Text>Something went wrong.</Text>
       </View>
     );
@@ -19,16 +19,18 @@ export default function Page() {
 
   return (
     <ScrollView
-      className="flex-1 bg-white pt-10"
+      className="flex-1 bg-gray-900 pt-10"
       contentContainerClassName="pb-20 gap-5"
       showsVerticalScrollIndicator={false}
       scrollEnabled={!gridActive}
     >
       <View className="px-5">
-        <Text className="text-base font-poppins-semibold mb-2">My Photos</Text>
+        <Text className="text-white font-poppins-semibold mb-2">My Photos</Text>
         <PhotoGrid profile={edits} />
         <View className="h-10" />
-        <Text className="text-base font-poppins-semibold mb-2">My Answers</Text>
+        <Text className="text-white font-poppins-semibold mb-2">
+          My Answers
+        </Text>
         <AnswerList profile={edits} />
       </View>
       <View className="pl-5 gap-10">

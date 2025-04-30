@@ -3276,7 +3276,7 @@ export const Card: FC<Props> = forwardRef<View, Props>(
           {icon}
         </View>
         <View>
-          <Text className="text-base font-poppins-medium">{title}</Text>
+          <Text className="text-white font-poppins-medium">{title}</Text>
           <Text className="text-sm font-poppins-light">{subtitle}</Text>
         </View>
       </Pressable>
@@ -3325,13 +3325,13 @@ const Page = () => {
   const { mutate } = useSignOut();
 
   return (
-    <View className="flex-1 bg-white p-5">
+    <View className="flex-1 bg-gray-900 p-5">
       <StackHeaderV2 title="Settings" />
       <TouchableOpacity
         className="p-3 border-y border-neutral-300"
         onPress={async () => mutate()}
       >
-        <Text className="text-base text-center font-poppins-regular">
+        <Text className="text-white text-center font-poppins-regular">
           Log Out
         </Text>
       </TouchableOpacity>
@@ -3721,12 +3721,12 @@ export const AnswerList: FC<Props> = ({
         key={item.key}
       >
         {item.answer ? (
-          <View className="flex-1 rounded-md overflow-hidden border border-neutral-200 p-5">
-            <Text className="text-base font-poppins-regular">
+          <View className="flex-1 rounded-md overflow-hidden border border-neutral-700 p-5">
+            <Text className="text-white font-poppins-regular">
               {item.answer.question}
             </Text>
             <Text
-              className="text-base font-poppins-regular text-neutral-400"
+              className="text-white font-poppins-regular text-neutral-400"
               numberOfLines={3}
             >
               {item.answer.answer_text}
@@ -3883,8 +3883,8 @@ interface Props {
 
 export const ProfileAnswer: FC<Props> = ({ answer }) => {
   return (
-    <View className="bg-white rounded-md px-5 pt-14 pb-20 gap-5 border border-neutral-200">
-      <Text className="text-base font-poppins-medium">{answer?.question}</Text>
+    <View className="bg-gray-900 rounded-md px-5 pt-14 pb-20 gap-5 border border-neutral-700">
+      <Text className="text-white font-poppins-medium">{answer?.question}</Text>
       <Text className="text-3xl font-playfair-semibold">
         {answer?.answer_text}
       </Text>
@@ -3928,16 +3928,16 @@ export const List: FC<Props> = ({ title, data, profile }) => {
       keyExtractor={(item) => item.title}
       ListHeaderComponent={() => {
         return (
-          <Text className="text-base font-poppins-semibold mb-2">{title}</Text>
+          <Text className="text-white font-poppins-semibold mb-2">{title}</Text>
         );
       }}
       renderItem={({ item }) => {
         return (
           <Link href={item.route as Href} asChild>
-            <Pressable className="flex-row items-center justify-between pr-5 border-b border-neutral-200 py-3">
+            <Pressable className="flex-row items-center justify-between pr-5 border-b border-neutral-700 py-3">
               <View>
                 <Text
-                  className={cn("text-base font-poppins-regular", {
+                  className={cn("text-white font-poppins-regular", {
                     "text-red-700":
                       ["Name", "Age", "Location", "Gender"].includes(
                         item.title
@@ -3947,7 +3947,7 @@ export const List: FC<Props> = ({ title, data, profile }) => {
                   {item.title}
                 </Text>
                 <Text
-                  className={cn("text-base font-poppins-light", {
+                  className={cn("text-white font-poppins-light", {
                     "text-red-700":
                       ["Name", "Age", "Location", "Gender"].includes(
                         item.title
@@ -3957,7 +3957,7 @@ export const List: FC<Props> = ({ title, data, profile }) => {
                   {item.getValue(profile!)}
                 </Text>
               </View>
-              <Ionicons name="chevron-forward" className="text-base  " />
+              <Ionicons name="chevron-forward" className="text-white  " />
             </Pressable>
           </Link>
         );
@@ -4014,7 +4014,7 @@ export const RadioList: React.FC<Props> = ({
             className="py-5 flex-row justify-between"
             onPress={() => handleSelection(item)}
           >
-            <Text className="text-base font-poppins-regular">{item.name}</Text>
+            <Text className="text-white font-poppins-regular">{item.name}</Text>
             <Checkbox
               value={isChecked}
               color={isChecked ? colors.fuchsia[950] : colors.neutral[400]}
@@ -4110,7 +4110,7 @@ const Page = () => {
   };
 
   return (
-    <View className="bg-white flex-1 px-5 py-20 ">
+    <View className="bg-gray-900 flex-1 px-5 py-20 ">
       <StackHeaderV4 title="Maximum distance" onPressBack={handlePress} />
       <Slider
         minimumValue={1}
@@ -4172,7 +4172,7 @@ const Page = () => {
   };
 
   return (
-    <View className="bg-white flex-1 px-5 py-20 ">
+    <View className="bg-gray-900 flex-1 px-5 py-20 ">
       <StackHeaderV4 title="Age range" onPressBack={handlePress} />
       <Slider
         minimumValue={18}
@@ -4237,7 +4237,7 @@ const Page = () => {
   };
 
   return (
-    <View className="bg-white flex-1 p-5">
+    <View className="bg-gray-900 flex-1 p-5">
       <StackHeaderV4 title="Ethnicity" onPressBack={handlePress} />
       <CheckboxList
         options={data}
@@ -4278,12 +4278,12 @@ export const Empty: FC<Props> = ({
   secondaryText,
 }) => {
   return (
-    <SafeAreaView className="flex-1 p-5 bg-white justify-center gap-8">
+    <SafeAreaView className="flex-1 p-5 bg-gray-900 justify-center gap-8">
       <View className="gap-2">
         <Text className="text-2xl font-playfair-semibold text-center">
           {title}
         </Text>
-        <Text className="text-base font-poppins-light text-center">
+        <Text className="text-white font-poppins-light text-center">
           {subTitle}
         </Text>
       </View>
@@ -4293,17 +4293,17 @@ export const Empty: FC<Props> = ({
             className="h-14 bg-black items-center justify-center rounded-full w-full"
             onPress={onPrimaryPress}
           >
-            <Text className="text-white text-base font-poppins-medium">
+            <Text className="text-white text-white font-poppins-medium">
               {primaryText}
             </Text>
           </Pressable>
         )}
         {secondaryText && (
           <Pressable
-            className="h-14 bg-white items-center justify-center rounded-full border border-neutral-400"
+            className="h-14 bg-gray-900 items-center justify-center rounded-full border border-neutral-400"
             onPress={onSecondaryPress}
           >
-            <Text className="text-black text-base font-poppins-medium ">
+            <Text className="text-whiite text-white font-poppins-medium ">
               {secondaryText}
             </Text>
           </Pressable>
@@ -4339,7 +4339,7 @@ export const ProfileItem: FC<Props> = ({children, item, type, onLike}) => {
       {children}
       {onLike && (
         <Fab
-          className="absolute bottom-5 right-5 bg-white shadow-sm"
+          className="absolute bottom-5 right-5 bg-gray-900 shadow-sm"
           iconName="heart-outline"
           iconClassName="text-fuchsia-900 text-4xl"
           onPress={() => onLike(item.id, type)}
@@ -4364,11 +4364,11 @@ interface Props {}
 
 export const Loader: FC<Props> = () => {
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-gray-900">
       <LottieView
         autoPlay
         // @ts-ignore
-        className="w-full h-full bg-white mt-12"
+        className="w-full h-full bg-gray-900 mt-12"
         source={require("~/assets/images/loading.json")}
       />
     </View>
@@ -4415,9 +4415,9 @@ interface Props {
 
 export const LikeCard: FC<Props> = ({ like: { photo_url, profile } }) => {
   return (
-    <View className="bg-white flex-1 rounded-lg overflow-hidden border border-neutral-200">
+    <View className="bg-gray-900 flex-1 rounded-lg overflow-hidden border border-neutral-700">
       <View className="p-4 gap-5">
-        <Text className="text-base font-poppins-light">{`Liked your ${
+        <Text className="text-white font-poppins-light">{`Liked your ${
           photo_url ? "photo" : "answer"
         }`}</Text>
         <Text className="text-xl font-poppins-medium">
@@ -4445,14 +4445,14 @@ export const LikeCard: FC<Props> = ({ like: { photo_url, profile } }) => {
 ```js
 const renderHeader = () => {
   return (
-    <View className="gap-5 bg-white ">
+    <View className="gap-5 bg-gray-900 ">
       <Text className="text-3xl font-poppins-semibold">Likes You</Text>
       {data.length > 0 && (
         <>
           <Link href={`/likes/${data[0].id}`} asChild>
-            <Pressable className="bg-white flex-1 rounded-lg overflow-hidden border border-neutral-200">
+            <Pressable className="bg-gray-900 flex-1 rounded-lg overflow-hidden border border-neutral-700">
               <View className="p-4 gap-5">
-                <Text className="text-base font-poppins-light">{`Liked your ${
+                <Text className="text-white font-poppins-light">{`Liked your ${
                   data[0].photo_url ? "photo" : "answer"
                 }`}</Text>
                 <Text className="text-xl font-poppins-medium">
@@ -4567,12 +4567,12 @@ const Page = () => {
   profile = transformPublicProfile(like.profile);
 
   return (
-    <View className="flex-1 px-5 bg-white">
+    <View className="flex-1 px-5 bg-gray-900">
       <Stack.Screen
         options={{
           headerLeft: () => (
             <Text
-              className="text-base font-poppins-medium"
+              className="text-white font-poppins-medium"
               onPress={() => router.back()}
               suppressHighlighting
             >
@@ -4599,21 +4599,21 @@ const Page = () => {
       </ScrollView>
 
       <Fab
-        className="absolute bottom-5 left-5 bg-white  shadow-sm h-20"
-        iconClassName="text-black text-4xl"
+        className="absolute bottom-5 left-5 bg-gray-900  shadow-sm h-20"
+        iconClassName="text-whiite text-4xl"
         iconName="close"
         onPress={handleRemove}
         loading={removePending}
-        loaderClassName="text-black"
+        loaderClassName="text-whiite"
         disabled={removePending || matchPending}
       />
       <Fab
-        className="absolute bottom-5 right-5 bg-white  shadow-sm h-20"
-        iconClassName="text-black text-4xl"
+        className="absolute bottom-5 right-5 bg-gray-900  shadow-sm h-20"
+        iconClassName="text-whiite text-4xl"
         iconName="chatbox-outline"
         onPress={handleMatch}
         loading={matchPending}
-        loaderClassName="text-black"
+        loaderClassName="text-whiite"
         disabled={removePending || matchPending}
       />
     </View>

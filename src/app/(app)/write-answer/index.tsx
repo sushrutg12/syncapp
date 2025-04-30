@@ -74,7 +74,7 @@ export default function Page() {
     router.dismissTo("/(app)/profile/(tabs)");
   };
   return (
-    <View className="flex-1 bg-white p-5">
+    <View className="flex-1 bg-gray-900 p-5">
       <StackHeaderV3
         title="Write answer"
         onPressCancel={handlePressCancel}
@@ -91,12 +91,12 @@ export default function Page() {
           asChild
           suppressHighlighting
         >
-          <Pressable className="border border-neutral-200 rounded-md px-5 py-6">
-            <Text className="text-base">{prompt?.question}</Text>
+          <Pressable className="border border-neutral-700 rounded-md px-5 py-6">
+            <Text className="text-white">{prompt?.question}</Text>
           </Pressable>
         </Link>
         <TextInput
-          className="border border-neutral-200 rounded-md p-5 h-36"
+          className="border border-neutral-700 rounded-md p-5 h-36"
           multiline={true}
           numberOfLines={6}
           maxLength={255}

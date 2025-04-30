@@ -58,9 +58,9 @@ export default function Page() {
   };
 
   return (
-    <View className="flex-1 bg-white p-5">
+    <View className="flex-1 bg-gray-900 p-5">
       <StackHeaderV4 title="Location" onPressBack={handlePress} />
-      <Text className="text-base font-poppins-light mb-10">
+      <Text className="text-white font-poppins-light mb-10">
         Only the neighborhood name will appear on your profile.
       </Text>
       <LocationView

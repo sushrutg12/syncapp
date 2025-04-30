@@ -29,7 +29,7 @@ const Page = () => {
   };
 
   return (
-    <View className="bg-white flex-1 px-5 py-20 ">
+    <View className="bg-gray-900 flex-1 px-5 py-20 ">
       <StackHeaderV4 title="Maximum distance" onPressBack={handlePress} />
       <Slider
         minimumValue={1}

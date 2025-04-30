@@ -6,11 +6,11 @@ interface Props {}
 
 export const Loader: FC<Props> = () => {
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-gray-900">
       <LottieView
         autoPlay
         // @ts-ignore
-        className="w-full h-full bg-white mt-12"
+        className="w-full h-full bg-gray-900 mt-12"
         source={require("~/assets/images/loading.json")}
       />
     </View>

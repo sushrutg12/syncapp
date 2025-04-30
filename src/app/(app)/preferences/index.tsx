@@ -9,14 +9,14 @@ export default function Page() {
 
   if (!edits) {
     return (
-      <View className="flex-1 bg-white items-center justify-center">
+      <View className="flex-1 bg-gray-900 items-center justify-center">
         <Text>Something went wrong.</Text>
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-white p-5">
+    <View className="flex-1 bg-gray-900 p-5">
       <StackHeaderV2 title="Dating Preferences" />
       <List
         title="Dating Preferences"
