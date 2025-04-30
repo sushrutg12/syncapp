@@ -5,6 +5,7 @@ import { Loader } from "@/components/loader";
 import { useRefreshOnFocus } from "@/hooks/refetch";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
+import React from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 
 export default function Page() {
