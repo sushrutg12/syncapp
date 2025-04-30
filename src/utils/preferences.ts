@@ -2,6 +2,12 @@ import { PrivateProfile } from "@/api/my-profile/types";
 
 export const memberPreferences = [
   {
+    title: "I am a",
+    getValue: (profile: PrivateProfile) =>
+      profile.user_type === "startup" ? "Startup" : "User",
+    route: "/preferences/user-type",
+  },
+  {
     title: "I'm interested in",
     getValue: (profile: PrivateProfile) => {
       return (

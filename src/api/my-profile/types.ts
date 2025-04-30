@@ -25,6 +25,7 @@ export interface PrivateProfile {
   answers: Answer[];
   photos: Photo[];
   avatar_url: string;
+  user_type: string;
 }
 
 export interface Photo {
