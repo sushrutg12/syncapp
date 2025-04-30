@@ -1,13 +1,13 @@
-import { StatusBar } from "expo-status-bar";
 import { useMyProfile } from "@/api/my-profile";
 import { Card } from "@/components/card";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Link, router, Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HingeLogo from "~/assets/images/hinge-logo.svg";
-import React from "react";
 
 export default function Page() {
   const { data: profile } = useMyProfile();
