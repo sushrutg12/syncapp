@@ -24,9 +24,9 @@ export default function Page() {
     <View className="flex-1 bg-gray-900 p-5">
       <StackHeaderV4 title="Name" onPressBack={handlePress} />
       <TextInput
-        className="border-b h-16 text-4xl font-poppins-medium"
-        selectionColor={colors.black}
-        cursorColor={colors.black}
+        className="border-b h-16 text-4xl font-poppins-medium text-white border-neutral-700"
+        selectionColor={colors.white}
+        cursorColor={colors.white}
         value={firstName}
         onChangeText={setFirstName}
       />

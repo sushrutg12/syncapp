@@ -24,9 +24,9 @@ export const ProfileTraits: FC<Props> = ({ profile }) => {
               >
                 <Ionicons
                   name={icon as keyof typeof Ionicons.glyphMap}
-                  className="text-2xl"
+                  className="text-2xl text-white"
                 />
-                <Text>{label}</Text>
+                <Text className="text-white">{label}</Text>
               </View>
             </View>
           );

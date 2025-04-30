@@ -74,7 +74,7 @@ export const ProfileView: FC<Props> = ({ profile, myProfile, onLike }) => {
       showsVerticalScrollIndicator={false}
     >
       {!myProfile && (
-        <Text className="text-3xl  font-poppins-semibold">
+        <Text className="text-3xl font-poppins-semibold text-white">
           {profile.first_name}
         </Text>
       )}

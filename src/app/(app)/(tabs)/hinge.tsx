@@ -38,7 +38,7 @@ export default function Page() {
               className="flex-1 rounded-full bg-neutral-400"
             />
           </Pressable>
-          <Text className="text-2xl font-poppins-semibold">
+          <Text className="text-2xl font-poppins-semibold text-white">
             {profile?.first_name}
           </Text>
         </View>
