@@ -160,3 +160,18 @@ export const useZodiacSigns = () => {
     initialData: [],
   });
 };
+
+export const useUserTypes = () =>
+  useQuery({
+    queryKey: ["user_types"],
+    queryFn: async (): Promise<{ id: number; name: string }[]> => {
+      // cast supabase to any so TS accepts the new table
+      const { data, error } = await (supabase as any)
+        .from("user_types")
+        .select("*");
+
+      if (error) throw error;
+      return data;
+    },
+    initialData: [],
+  });
