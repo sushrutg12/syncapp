@@ -67,15 +67,18 @@ export default function Layout() {
       />
       <MaterialTopTabs
         screenOptions={{
+          tabBarStyle: {
+            backgroundColor: "#111827",
+          },
           tabBarIndicatorStyle: {
-            backgroundColor: colors.fuchsia[900],
+            backgroundColor: "#ecac6d",
           },
           tabBarLabelStyle: {
             textTransform: "capitalize",
             fontWeight: "bold",
             fontSize: 13,
           },
-          tabBarActiveTintColor: colors.fuchsia[900],
+          tabBarActiveTintColor: "#ecac6d",
           tabBarInactiveTintColor: colors.neutral[300],
           swipeEnabled: !gridActive,
         }}
