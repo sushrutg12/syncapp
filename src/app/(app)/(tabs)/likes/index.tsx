@@ -15,7 +15,12 @@ export default function Page() {
   const renderHeader = () => {
     return (
       <View className="gap-5 bg-gray-900 ">
-        <Text className="text-3xl font-poppins-semibold" style={{ color: '#ecac6d' }}>Standouts</Text>
+        <Text
+          className="text-3xl font-poppins-semibold"
+          style={{ color: "#ecac6d" }}
+        >
+          Standouts
+        </Text>
         {data.length > 0 && (
           <>
             <Link href={`/likes/${data[0].id}`} asChild>

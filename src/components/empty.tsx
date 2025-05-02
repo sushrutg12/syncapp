@@ -22,10 +22,16 @@ export const Empty: FC<Props> = ({
   return (
     <SafeAreaView className="flex-1 p-5 bg-gray-900 justify-center gap-8">
       <View className="gap-2">
-        <Text className="text-2xl font-playfair-semibold text-center">
+        <Text
+          className="text-2xl font-playfair-semibold text-center"
+          style={{ color: "#ecac6d" }}
+        >
           {title}
         </Text>
-        <Text className="text-white font-poppins-light text-center">
+        <Text
+          className="font-poppins-light text-center"
+          style={{ color: "#ecac6d" }}
+        >
           {subTitle}
         </Text>
       </View>
@@ -33,19 +39,21 @@ export const Empty: FC<Props> = ({
         {primaryText && (
           <Pressable
             className="h-14 bg-black items-center justify-center rounded-full w-full"
+            style={{ borderColor: "#ecac6d", borderWidth: 1 }}
             onPress={onPrimaryPress}
           >
-            <Text className="text-white text-white font-poppins-medium">
+            <Text className="font-poppins-medium" style={{ color: "#ecac6d" }}>
               {primaryText}
             </Text>
           </Pressable>
         )}
         {secondaryText && (
           <Pressable
-            className="h-14 bg-gray-900 items-center justify-center rounded-full border border-neutral-400"
+            className="h-14 bg-gray-900 items-center justify-center rounded-full border"
+            style={{ borderColor: "#ecac6d" }}
             onPress={onSecondaryPress}
           >
-            <Text className="text-whiite text-white font-poppins-medium ">
+            <Text className="font-poppins-medium" style={{ color: "#ecac6d" }}>
               {secondaryText}
             </Text>
           </Pressable>
