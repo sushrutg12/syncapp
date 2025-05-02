@@ -25,7 +25,11 @@ export default function Page() {
             <HingeLogo width={64} />
             <View className="flex-row items-center gap-4">
               <Link href="/preferences" suppressHighlighting>
-                <Ionicons name="options-outline" className="text-2xl" />
+                <Ionicons
+                  name="options-outline"
+                  className="text-2xl"
+                  style={{ color: "#ecac6d" }}
+                />
               </Link>
               <Link href="/settings" suppressHighlighting>
                 <Ionicons name="settings-outline" className="text-2xl" />

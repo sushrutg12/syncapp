@@ -127,7 +127,11 @@ export default function Page() {
     <View className="flex-1 bg-gray-900">
       <ScrollView className="flex-1 px-5">
         <Link href={"/preferences"} suppressHighlighting>
-          <Ionicons name="options-outline" className="text-3xl" />
+          <Ionicons
+            name="options-outline"
+            className="text-3xl"
+            style={{ color: "#ecac6d" }}
+          />
         </Link>
         {profile && <ProfileView profile={profile} onLike={handleLike} />}
       </ScrollView>
