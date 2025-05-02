@@ -3,10 +3,10 @@ import { PrivateProfile } from "@/api/my-profile/types";
 export const identity = [
   {
     title: "I am a",
-    getValue: (p: PrivateProfile) => p.user_type || "User",
-    route: "/profile/user-type",
+    getValue: (p: PrivateProfile) => p.user_types || "User",
+    route: "/profile/user-types",
   },
-  
+
   {
     title: "Pronouns",
     getValue: (profile: PrivateProfile) => {

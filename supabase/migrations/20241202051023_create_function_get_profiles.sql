@@ -28,6 +28,7 @@ returns table (
   pets text[], 
   pronouns text[], 
   photos jsonb, 
+  user_types text,
   answers jsonb
 )
 language plpgsql
@@ -72,6 +73,7 @@ select
   covid_vaccine.name as covid_vaccine,
   zodiac_signs.name as zodiac_sign,
   genders.name as gender,
+  p.user_types,
   sexualities.name as sexuality,
   (
     select coalesce(array_agg(ethnicities.name), '{}')
@@ -123,6 +125,7 @@ left join profile_gender_preferences pgp_p on pgp_p.profile_id = p.id
 left join profile_ethnicity_preferences pep_cp on pep_cp.profile_id = v_profile_id
 left join profile_ethnicity_preferences pep_p on pep_p.profile_id = p.id
 left join interactions i_cp on i_cp.target_id = p.id and i_cp.actor_id = v_profile_id
+left join user_types ut on ut.id = p.user_types_id
 left join interactions i_p on i_p.target_id = v_profile_id and i_p.actor_id = p.id
 where (p.gender_id = pgp_cp.gender_id or pgp_cp.gender_id is null) 
   and (current_profile.gender_id = pgp_p.gender_id or pgp_p.gender_id is null)
