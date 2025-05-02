@@ -24,7 +24,7 @@ export default function Layout() {
         tabBarStyle: {
           backgroundColor: colors.neutral[950],
         },
-        tabBarActiveTintColor: colors.white,
+        tabBarActiveTintColor: "#ecac6d",
         tabBarInactiveTintColor: colors.neutral[500],
         tabBarShowLabel: false,
         headerStyle: {
