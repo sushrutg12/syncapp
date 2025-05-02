@@ -32,14 +32,19 @@ export default function Page() {
                 />
               </Link>
               <Link href="/settings" suppressHighlighting>
-                <Ionicons name="settings-outline" className="text-2xl" />
+                <Ionicons
+                  name="settings-outline"
+                  className="text-2xl"
+                  style={{ color: "#ecac6d" }}
+                />
               </Link>
             </View>
           </View>
 
           <View className="items-center gap-2 my-12">
             <Pressable
-              className="h-32 aspect-square rounded-full border-4 border-fuchsia-900 p-1"
+              className="h-32 aspect-square rounded-full border-4 p-1"
+              style={{ borderColor: "#ecac6d" }}
               onPress={() => router.push("/profile")}
             >
               <Image
@@ -47,7 +52,10 @@ export default function Page() {
                 className="flex-1 rounded-full bg-neutral-400"
               />
             </Pressable>
-            <Text className="text-2xl font-poppins-semibold text-white">
+            <Text
+              className="text-2xl font-poppins-semibold"
+              style={{ color: "#ecac6d" }}
+            >
               {profile?.first_name}
             </Text>
           </View>
@@ -56,13 +64,25 @@ export default function Page() {
         <View className="flex-1 p-5 gap-4">
           <Card
             key="help"
-            icon={<Ionicons name="help" className="text-2xl" />}
+            icon={
+              <Ionicons
+                name="help"
+                className="text-2xl"
+                style={{ color: "#ecac6d" }}
+              />
+            }
             title="Help Center"
             subtitle="Safety, Security, and more"
           />
           <Card
             key="what-works"
-            icon={<Ionicons name="bulb-outline" className="text-2xl" />}
+            icon={
+              <Ionicons
+                name="bulb-outline"
+                className="text-2xl"
+                style={{ color: "#ecac6d" }}
+              />
+            }
             title="What Works"
             subtitle="Check out our expert dating tips"
           />
