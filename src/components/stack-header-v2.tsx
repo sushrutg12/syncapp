@@ -14,9 +14,20 @@ export const StackHeaderV2: FC<Props> = ({ title }) => {
         title,
         headerTitleAlign: "center",
         headerBackVisible: false,
+        headerStyle: {
+          backgroundColor: "#111827",
+        },
+        headerTitleStyle: {
+          color: "#ecac6d",
+        },
         headerRight: () => (
           <Pressable onPressOut={router.back}>
-            <Ionicons name="close" className="text-2xl" suppressHighlighting />
+            <Ionicons
+              name="close"
+              className="text-2xl"
+              style={{ color: "#ecac6d" }}
+              suppressHighlighting
+            />
           </Pressable>
         ),
       }}
