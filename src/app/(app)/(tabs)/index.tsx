@@ -139,7 +139,7 @@ export default function Page() {
         onPress={handleSkip}
         iconName="close"
         className="bg-gray-900 shadow-sm active:h-[4.75rem] h-20 absolute bottom-5 left-5"
-        iconClassName="text-whiite text-4xl"
+        iconClassName="text-[#ecac6d] text-4xl"
         loaderClassName="text-whiite"
       />
     </View>
