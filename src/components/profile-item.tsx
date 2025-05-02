@@ -24,4 +24,5 @@ export const ProfileItem: FC<Props> = ({ children, item, type, onLike }) => {
       )}
     </View>
   );
+  
 };
