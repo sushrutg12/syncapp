@@ -21,7 +21,7 @@ export default function Page() {
   return (
     <View className="flex-1 bg-gray-900">
       <View className="px-5 pb-5">
-        <Text className="text-3xl font-poppins-semibold">Matches</Text>
+        <Text className="text-3xl font-poppins-semibold" style={{ color: '#ecac6d' }}>Matches</Text>
       </View>
       <GroupChannelListFragment
         channelListQueryParams={{
