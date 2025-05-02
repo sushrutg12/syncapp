@@ -7,9 +7,18 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HingeLogo from "~/assets/images/hinge-logo.svg";
-
 // Create a custom card component right in the file
-const GoldCard = ({ icon, title, subtitle, ...rest }) => {
+const GoldCard = ({ 
+  icon, 
+  title, 
+  subtitle, 
+  ...rest 
+}: { 
+  icon: React.ReactNode; 
+  title: string; 
+  subtitle: string; 
+  [key: string]: any;
+}) => {
   return (
     <Pressable
       {...rest}
