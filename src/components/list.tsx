@@ -23,36 +23,46 @@ export const List: FC<Props> = ({ title, data, profile }) => {
       keyExtractor={(item) => item.title}
       ListHeaderComponent={() => {
         return (
-          <Text className="text-white font-poppins-semibold mb-2">{title}</Text>
+          <Text
+            className="font-poppins-semibold mb-2"
+            style={{ color: "#ecac6d" }}
+          >
+            {title}
+          </Text>
         );
       }}
       renderItem={({ item }) => {
         return (
           <Link href={item.route as Href} asChild>
-            <Pressable className="flex-row items-center justify-between pr-5 border-b border-neutral-700 py-3">
+            <Pressable
+              className="flex-row items-center justify-between pr-5 border-b py-3"
+              style={{ borderColor: "#ecac6d" }}
+            >
               <View>
                 <Text
-                  className={cn("text-white font-poppins-regular", {
+                  className={cn("font-poppins-regular", {
                     "text-red-700":
                       ["Name", "Age", "Location", "Gender"].includes(
                         item.title
                       ) && item.getValue(profile) === "None",
                   })}
+                  style={{ color: "#ecac6d" }}
                 >
                   {item.title}
                 </Text>
                 <Text
-                  className={cn("text-white font-poppins-light", {
+                  className={cn("font-poppins-light", {
                     "text-red-700":
                       ["Name", "Age", "Location", "Gender"].includes(
                         item.title
                       ) && item.getValue(profile) === "None",
                   })}
+                  style={{ color: "#ecac6d" }}
                 >
                   {item.getValue(profile!)}
                 </Text>
               </View>
-              <Ionicons name="chevron-forward" className="text-white  " />
+              <Ionicons name="chevron-forward" style={{ color: "#ecac6d" }} />
             </Pressable>
           </Link>
         );

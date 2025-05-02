@@ -116,7 +116,7 @@ export default function Page() {
               />
             }
             title="Help Center"
-            subtitle="Safety, Security, and more"
+            subtitle="What is Sync and how can you use it?"
           />
           <GoldCard
             key="what-works"
@@ -128,7 +128,7 @@ export default function Page() {
               />
             }
             title="What Works"
-            subtitle="Check out our expert dating tips"
+            subtitle="The Best Search Tips for Startups"
           />
         </View>
       </SafeAreaView>
