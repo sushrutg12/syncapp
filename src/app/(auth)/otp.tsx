@@ -11,7 +11,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-import colors from "tailwindcss/colors";
 
 export default function Page() {
   const [otp, setOtp] = useState("");
@@ -46,10 +45,13 @@ export default function Page() {
       keyboardVerticalOffset={100}
     >
       <StackHeader />
-      <StatusBar barStyle={"dark-content"} />
+      <StatusBar barStyle="light-content" />
       <View className="flex-1 justify-center pt-28">
         <View className="flex-1">
-          <Text className="text-4xl font-playfair-semibold">
+          <Text
+            className="text-4xl font-playfair-semibold"
+            style={{ color: "#ecac6d" }}
+          >
             Enter your verification code?
           </Text>
           <View className="h-28" />
@@ -58,21 +60,25 @@ export default function Page() {
               <View
                 key={index}
                 className="border-b flex-1 items-center justify-center"
+                style={{ borderColor: "#ecac6d" }}
               >
-                <Text className="text-4xl font-poppins-semibold">
+                <Text
+                  className="text-4xl font-poppins-semibold"
+                  style={{ color: "#ecac6d" }}
+                >
                   {otp[index] || ""}
                 </Text>
               </View>
             ))}
           </View>
           <TextInput
-            className="absoulte h-1 w-1 opacity-0"
+            className="absolute h-1 w-1 opacity-0"
             style={
               Platform.OS === "ios" && {
                 lineHeight: undefined,
               }
             }
-            selectionColor={colors.black}
+            selectionColor={"#ecac6d"}
             keyboardType="numeric"
             textContentType="oneTimeCode"
             autoFocus={true}
@@ -81,7 +87,10 @@ export default function Page() {
             maxLength={6}
           />
           {isError && (
-            <Text className="text-red-500 text-sm text-center mt-4">
+            <Text
+              className="text-sm text-center mt-4"
+              style={{ color: "#ecac6d" }}
+            >
               {error.message}
             </Text>
           )}
@@ -91,6 +100,8 @@ export default function Page() {
             disabled={!isValid || isPending}
             onPress={handleSubmit}
             loading={isPending}
+            iconClassName="text-white text-4xl"
+            className="bg-[#ecac6d]"
           />
         </View>
       </View>

@@ -11,7 +11,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-import colors from "tailwindcss/colors";
 
 export default function Page() {
   const [phone, setPhone] = useState("");
@@ -56,21 +55,26 @@ export default function Page() {
       keyboardVerticalOffset={100}
     >
       <StackHeader />
-      <StatusBar barStyle={"dark-content"} />
+      <StatusBar barStyle="light-content" />
       <View className="flex-1 justify-center pt-28">
         <View className="flex-1">
-          <Text className="text-4xl font-playfair-semibold">
+          <Text 
+            className="text-4xl font-playfair-semibold"
+            style={{ color: "#ecac6d" }}
+          >
             What's your phone number?
           </Text>
           <View className="h-28" />
           <TextInput
             className="border-b h-16 text-4xl font-poppins-semibold"
-            style={
-              Platform.OS === "ios" && {
+            style={{
+              color: "#ecac6d",
+              borderColor: "#ecac6d",
+              ...(Platform.OS === "ios" && {
                 lineHeight: undefined,
-              }
-            }
-            selectionColor={colors.black}
+              })
+            }}
+            selectionColor={"#ecac6d"}
             keyboardType="phone-pad"
             textContentType="telephoneNumber"
             autoFocus={true}
@@ -80,7 +84,10 @@ export default function Page() {
             ref={phoneRef}
           />
           {isError && (
-            <Text className="text-red-500 text-sm text-center mt-4">
+            <Text 
+              className="text-sm text-center mt-4"
+              style={{ color: "#ecac6d" }}
+            >
               {error.message}
             </Text>
           )}
@@ -90,6 +97,8 @@ export default function Page() {
             disabled={!isValid || isPending}
             onPress={handleSubmit}
             loading={isPending}
+            iconClassName="text-white text-4xl"
+            className="bg-[#ecac6d]"
           />
         </View>
       </View>
