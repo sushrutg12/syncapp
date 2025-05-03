@@ -15,7 +15,7 @@ export default function Page() {
   }
 
   return (
-    <View className="flex-1 px-5">
+    <View className="flex-1 px-5 bg-gray-900">
       <ProfileView profile={transformPrivateProfile(edits)} myProfile />
     </View>
   );
