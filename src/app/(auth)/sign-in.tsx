@@ -1,37 +1,51 @@
-import { VideoBackground } from "@/components/video-background";
+// src/app/(auth)/sign-in.tsx
 import { Link, Stack } from "expo-router";
 import { Pressable, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import colors from "tailwindcss/colors";
-import Logo from "~/assets/images/hinge-logo.svg";
 
 export default function Page() {
   return (
-    <View className="flex-1">
+    <View className="flex-1" style={{ backgroundColor: "#111827" }}>
       <Stack.Screen
         options={{
           headerShown: false,
         }}
       />
-      <StatusBar barStyle={"dark-content"} />
-      <VideoBackground source={require("~/assets/images/background.mp4")}>
-        <SafeAreaView className="flex-1 p-10">
-          <View className="flex-1 items-center pt-14">
-            <Logo fill={colors.white} width={150} height={57} />
-            <View className="h-4" />
-            <Text className="text-white text-xl font-poppins-semibold">
-              Designed to be deleted
+      <StatusBar barStyle="light-content" />
+      <SafeAreaView className="flex-1 p-10">
+        <View className="flex-1 items-center justify-center">
+          <Text
+            className="text-6xl font-playfair-semibold"
+            style={{ color: "#ecac6d" }}
+          >
+            Sync
+          </Text>
+          <View className="h-4" />
+          <Text
+            className="text-xl font-poppins-semibold"
+            style={{ color: "#ecac6d" }}
+          >
+            Designed to be deleted
+          </Text>
+        </View>
+        <Link href={"/phone"} asChild>
+          <Pressable
+            className="h-16 items-center justify-center rounded-full"
+            style={{
+              backgroundColor: "#111827",
+              borderColor: "#ecac6d",
+              borderWidth: 1,
+            }}
+          >
+            <Text
+              className="text-lg font-poppins-semibold"
+              style={{ color: "#ecac6d" }}
+            >
+              Sign in with Phone Number
             </Text>
-          </View>
-          <Link href={"/phone"} asChild>
-            <Pressable className="bg-fuchsia-900 h-16 items-center justify-center rounded-full">
-              <Text className="text-white text-lg font-poppins-semibold">
-                Sign in with Phone Number
-              </Text>
-            </Pressable>
-          </Link>
-        </SafeAreaView>
-      </VideoBackground>
+          </Pressable>
+        </Link>
+      </SafeAreaView>
     </View>
   );
 }

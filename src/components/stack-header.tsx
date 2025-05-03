@@ -12,9 +12,17 @@ export const StackHeader: FC<Props> = () => {
       options={{
         headerBackVisible: false,
         title: "",
+        headerStyle: {
+          backgroundColor: "#111827",
+        },
         headerRight: () => (
           <Pressable onPress={router.back}>
-            <Ionicons name="close" className="text-2xl" suppressHighlighting />
+            <Ionicons
+              name="close"
+              className="text-2xl"
+              style={{ color: "#ecac6d" }}
+              suppressHighlighting
+            />
           </Pressable>
         ),
         headerShadowVisible: false,
