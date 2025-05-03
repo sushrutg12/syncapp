@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 
 export default function Page() {
   const { data, isFetching, error, refetch } = useProfiles();
@@ -134,6 +134,12 @@ export default function Page() {
           />
         </Link>
         {profile && <ProfileView profile={profile} onLike={handleLike} />}
+        <Text
+          className="font-poppins-semibold mb-2"
+          style={{ color: "#ecac6d" }}
+        >
+          My Answers
+        </Text>
       </ScrollView>
       <Fab
         onPress={handleSkip}

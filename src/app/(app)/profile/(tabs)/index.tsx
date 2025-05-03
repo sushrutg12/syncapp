@@ -25,10 +25,10 @@ export default function Page() {
       scrollEnabled={!gridActive}
     >
       <View className="px-5">
-        <Text className="text-white font-poppins-semibold mb-2">My Photos</Text>
+        <Text className="text-white font-poppins-semibold mb-2" style={{ color: "#ecac6d" }}>My Photos</Text>
         <PhotoGrid profile={edits} />
         <View className="h-10" />
-        <Text className="text-white font-poppins-semibold mb-2">
+        <Text className="font-poppins-semibold mb-2" style={{ color: "#ecac6d" }}>
           My Answers
         </Text>
         <AnswerList profile={edits} />

@@ -75,19 +75,26 @@ export const AnswerList: FC<Props> = ({
         key={item.key}
       >
         {item.answer ? (
-          <View className="flex-1 rounded-md overflow-hidden border border-neutral-700 p-5">
-            <Text className="text-white font-poppins-regular">
+          <View
+            className="flex-1 rounded-md overflow-hidden border p-5"
+            style={{ borderColor: "#ecac6d" }}
+          >
+            <Text className="font-poppins-regular" style={{ color: "#ecac6d" }}>
               {item.answer.question}
             </Text>
             <Text
-              className="text-white font-poppins-regular text-neutral-400"
+              className="font-poppins-regular"
+              style={{ color: "#ecac6d" }}
               numberOfLines={3}
             >
               {item.answer.answer_text}
             </Text>
           </View>
         ) : (
-          <View className="flex-1 rounded-md border border-red-600 border-dashed" />
+          <View
+            className="flex-1 rounded-md border border-dashed"
+            style={{ borderColor: "#ecac6d" }}
+          />
         )}
       </View>
     );
