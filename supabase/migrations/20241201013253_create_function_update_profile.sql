@@ -17,7 +17,8 @@ create or replace function update_profile(
   pronouns integer[] default null,
   gender_preferences integer[] default null,
   answers jsonb default null,
-  photos jsonb default null
+  photos jsonb default null,
+  user_types text default null
 )
 returns void
 language plpgsql
@@ -57,6 +58,7 @@ covid_vaccine_id = coalesce(update_profile.covid_vaccine, profiles.covid_vaccine
 zodiac_sign_id = coalesce(update_profile.zodiac_sign, profiles.zodiac_sign_id),
 sexuality_id = coalesce(update_profile.sexuality, profiles.sexuality_id),
 gender_id = coalesce(update_profile.gender, profiles.gender_id),
+user_types = coalesce(update_profile.user_types, profiles.user_types),
 updated_at = now()
 where profiles.id = v_profile_id;
 

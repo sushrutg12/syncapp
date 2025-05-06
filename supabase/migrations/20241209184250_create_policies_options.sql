@@ -69,3 +69,10 @@ as permissive
 for select
 to public
 using (true);
+
+create policy "select_user_types_public"
+on "public"."user_types"
+as permissive
+for select
+to public
+using (true);

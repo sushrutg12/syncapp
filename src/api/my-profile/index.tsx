@@ -82,6 +82,7 @@ export const useUpdateProfile = () => {
       );
 
       let { error } = await supabase.rpc("update_profile", {
+        user_types: profile.user_types,
         answers: answers,
         children: profile.children?.id,
         covid_vaccine: profile.covid_vaccine?.id,
