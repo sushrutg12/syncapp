@@ -37,7 +37,7 @@ read -p "Do you want to load sample data? (y/n) " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "Loading sample data..."
-    PGPASSWORD=postgres psql -U postgres -h localhost -p 54322 -d postgres -f founder_employee_seed.sql
+    PGPASSWORD=postgres psql -U postgres -h localhost -p 54322 -d postgres -f supabase/founder_employee_seed.sql
     if [ $? -ne 0 ]; then
         echo "Failed to load sample data"
         exit 1
