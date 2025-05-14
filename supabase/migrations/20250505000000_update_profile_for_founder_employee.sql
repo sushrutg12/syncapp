@@ -1,20 +1,11 @@
--- 1. Update profiles table with the new fields (if they don't exist)
-DO $$ 
-BEGIN
-  -- Only try to add columns if they don't exist
-  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'profiles' AND column_name = 'one_line_description') THEN
-    ALTER TABLE "public"."profiles" ADD COLUMN "one_line_description" text;
-  END IF;
-  
-  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'profiles' AND column_name = 'user_role') THEN
-    ALTER TABLE "public"."profiles" ADD COLUMN "user_role" text NOT NULL DEFAULT 'founder';
-  END IF;
-  
-  -- Only add constraint if it doesn't exist
-  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'check_user_role') THEN
-    ALTER TABLE "public"."profiles" ADD CONSTRAINT "check_user_role" CHECK (user_role IN ('founder', 'creative', 'swe'));
-  END IF;
-END $$;
+-- 1. Update profiles table with the new fields
+ALTER TABLE "public"."profiles"
+  ADD COLUMN "one_line_description" text,
+  ADD COLUMN "user_role" text NOT NULL DEFAULT 'startup';
+
+-- Add check constraint separately
+ALTER TABLE "public"."profiles"
+  ADD CONSTRAINT check_user_role CHECK (user_role IN ('startup', 'user'));
 
 -- 2. Create a skills table for programming languages/tools
 CREATE TABLE "public"."skills" (
