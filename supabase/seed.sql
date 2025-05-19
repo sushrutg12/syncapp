@@ -1,4 +1,3 @@
-
 insert into "public"."children" ("id", "name") values
 	(1, 'Don''t have children'),
 	(2, 'Have children');
@@ -449,3 +448,131 @@ insert into "public"."interaction_status" ("id", "status") values
 	(4, 'match'),
 	(5, 'unmatch'),
 	(6, 'review');
+-- Add new seed data or update existing profiles
+
+-- First clear existing data if needed (optional)
+-- DELETE FROM profiles WHERE id NOT IN (SELECT id FROM profiles WHERE user_id = auth.uid());
+
+-- Update existing profiles only with new fields (don't try to insert new ones yet)
+UPDATE profiles
+SET 
+  user_role = CASE 
+    WHEN random() < 0.5 THEN 'startup' 
+    ELSE 'candidate' 
+  END,
+  one_line_description = CASE 
+    WHEN random() < 0.5 THEN 'Innovative startup revolutionizing tech' 
+    ELSE 'Passionate professional with expertise' 
+  END,
+  looking_for_roles = CASE
+    WHEN random() < 0.5 THEN ARRAY['Frontend', 'Backend', 'Full Stack']
+    ELSE NULL
+  END;
+
+-- Leave out the INSERT part for now until we can verify the correct IDs
+
+-- Update profiles with sample data for funding_stage, offer_details, and why_us_platform
+UPDATE profiles
+SET 
+  funding_stage = CASE 
+    WHEN user_role = 'startup' THEN 
+      (ARRAY['Pre-seed', 'Seed', 'Series A', 'Series B', 'Bootstrapped', 'Revenue Generating'])[floor(random() * 6) + 1]
+    ELSE NULL
+  END,
+  offer_details = CASE
+    WHEN user_role = 'startup' THEN 
+      jsonb_build_object(
+        'salary_range', (ARRAY['$80K-$120K', '$100K-$150K', '$120K-$180K', 'Competitive'])[floor(random() * 4) + 1],
+        'equity', (ARRAY['0.1-0.5%', '0.5-1.5%', '1-3%', 'Negotiable'])[floor(random() * 4) + 1],
+        'remote', random() > 0.5,
+        'benefits', (ARRAY[
+          jsonb_build_array('Health Insurance', 'Flexible Hours', '401K Match'),
+          jsonb_build_array('Unlimited PTO', 'Remote Work', 'Stock Options'),
+          jsonb_build_array('Health Benefits', 'Professional Development', 'Gym Membership')
+        ])[floor(random() * 3) + 1]
+      )
+    ELSE NULL
+  END,
+  why_us_platform = CASE
+    WHEN user_role = 'startup' THEN
+      (ARRAY[
+        'We''re revolutionizing the industry with innovative technology and a passionate team.',
+        'Join us to work on challenging problems with industry-leading experts.',
+        'We offer exceptional growth opportunities and a collaborative culture.',
+        'Our mission is to create meaningful impact while prioritizing work-life balance.',
+        'Be part of a diverse team building the next generation of technology solutions.'
+      ])[floor(random() * 5) + 1]
+    ELSE NULL
+  END
+WHERE user_role IN ('startup', 'candidate');
+
+-- Update candidate profiles with skills data
+UPDATE profiles
+SET skills = CASE
+  WHEN user_role = 'candidate' THEN 
+    (ARRAY['JavaScript', 'React', 'Node.js', 'Python', 'TypeScript'])[1:floor(random() * 5) + 1]
+  ELSE 
+    NULL
+  END
+WHERE user_role = 'candidate';
+
+-- Update candidate profiles with projects data
+UPDATE profiles
+SET projects = 
+  jsonb_build_array(
+    jsonb_build_object(
+      'id', gen_random_uuid(),
+      'title', 'E-commerce Platform',
+      'description', 'Built a full-stack e-commerce platform with React, Next.js, and PostgreSQL. Implemented user authentication, product management, and payment processing.',
+      'project_order', 0,
+      'media', jsonb_build_array(
+        jsonb_build_object(
+          'id', gen_random_uuid(),
+          'media_type', 'image',
+          'url', 'https://images.unsplash.com/photo-1523726491678-bf852e717f6a?q=80&w=1000',
+          'media_order', 0
+        ),
+        jsonb_build_object(
+          'id', gen_random_uuid(),
+          'media_type', 'url',
+          'url', 'https://github.com/example/ecommerce',
+          'media_order', 1
+        )
+      )
+    ),
+    jsonb_build_object(
+      'id', gen_random_uuid(),
+      'title', 'Mobile App Development',
+      'description', 'Created a cross-platform mobile app using React Native with Firebase integration. Features include real-time chat, user profiles, and geo-location services.',
+      'project_order', 1,
+      'media', jsonb_build_array(
+        jsonb_build_object(
+          'id', gen_random_uuid(),
+          'media_type', 'image',
+          'url', 'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1000',
+          'media_order', 0
+        )
+      )
+    ),
+    jsonb_build_object(
+      'id', gen_random_uuid(),
+      'title', 'AI Recommendation Engine',
+      'description', 'Developed a machine learning recommendation system that analyzes user behavior to provide personalized content suggestions, increasing engagement by 45%.',
+      'project_order', 2,
+      'media', jsonb_build_array(
+        jsonb_build_object(
+          'id', gen_random_uuid(),
+          'media_type', 'image',
+          'url', 'https://images.unsplash.com/photo-1591696205602-2f950c417cb9?q=80&w=1000',
+          'media_order', 0
+        ),
+        jsonb_build_object(
+          'id', gen_random_uuid(),
+          'media_type', 'demo_link',
+          'url', 'https://demo.example.com/ai-recommendation',
+          'media_order', 1
+        )
+      )
+    )
+  )
+WHERE user_role = 'candidate' AND (projects IS NULL OR jsonb_array_length(projects) = 0);

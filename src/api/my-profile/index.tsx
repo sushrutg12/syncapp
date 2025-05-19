@@ -7,14 +7,56 @@ export const useMyProfile = () => {
   return useQuery<PrivateProfile | null>({
     queryKey: ["myProfile"],
     queryFn: async () => {
-      let { data, error } = await supabase
-        .rpc("get_profile")
-        .returns<PrivateProfile>()
-        .single();
-      if (error) throw error;
-      return data;
+      try {
+        let { data, error } = await supabase
+          .rpc("get_profile")
+          .returns<PrivateProfile>()
+          .single();
+
+        if (error) {
+          console.error("Profile fetch error:", error);
+          // If profile not found, sign out user
+          if (error.message.includes("profile not found")) {
+            console.log("Profile not found for user, signing out...");
+            await supabase.auth.signOut();
+          }
+          throw error;
+        }
+
+        return data;
+      } catch (error) {
+        console.error("Profile fetch failed:", error);
+        throw error;
+      }
     },
     initialData: null,
+  });
+};
+
+export const useUpdateCandidateSkills = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      skills,
+      profileId,
+    }: {
+      skills: string[];
+      profileId: string;
+    }) => {
+      const { error } = await supabase.rpc("update_candidate_skills", {
+        p_profile_id: profileId,
+        p_skill_names: skills,
+      });
+
+      if (error) {
+        throw error;
+      }
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+      await queryClient.invalidateQueries({ queryKey: ["profiles"] });
+    },
   });
 };
 
@@ -81,34 +123,87 @@ export const useUpdateProfile = () => {
         })
       );
 
-      let { error } = await supabase.rpc("update_profile", {
+      // Standard profile update parameters
+      const updateParams: Record<string, any> = {
         user_role: profile.user_role,
         answers: answers,
         children: profile.children?.id,
         covid_vaccine: profile.covid_vaccine?.id,
         dob: profile.dob,
-        ethnicities: profile.ethnicities.map((option) => option.id),
-        family_plan: profile.family_plan?.id,
         first_name: profile.first_name,
         gender: profile.gender?.id,
-        gender_preferences: profile.gender_preferences.map(
-          (option) => option.id
-        ),
         height_cm: profile.height_cm,
         last_name: profile.last_name,
         latitude: profile.latitude,
         longitude: profile.longitude,
         neighborhood: profile.neighborhood,
-        pets: profile.pets.map((option) => option.id),
         photos: photos,
-        pronouns: profile.pronouns.map((option) => option.id),
         sexuality: profile.sexuality?.id,
         zodiac_sign: profile.zodiac_sign?.id,
-      });
+      };
+
+      // Add array parameters if they exist
+      if (profile.ethnicities) {
+        updateParams.ethnicities = profile.ethnicities.map(
+          (option) => option.id
+        );
+      }
+
+      if (profile.gender_preferences) {
+        updateParams.gender_preferences = profile.gender_preferences.map(
+          (option) => option.id
+        );
+      }
+
+      if (profile.pets) {
+        updateParams.pets = profile.pets.map((option) => option.id);
+      }
+
+      if (profile.pronouns) {
+        updateParams.pronouns = profile.pronouns.map((option) => option.id);
+      }
+
+      // Add startup-specific fields if they exist
+      if (profile.looking_for_roles) {
+        updateParams.looking_for_roles = profile.looking_for_roles;
+      }
+
+      let { error } = await supabase.rpc("update_profile", updateParams);
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+    },
+  });
+};
+
+export const useUpdateLookingForRoles = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ roles }: { roles: string[] }) => {
+      // Get the current user's ID
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+
+      // Update the profile directly using the update method with type assertion
+      const { error } = await supabase
+        .from("profiles")
+        .update({ looking_for_roles: roles } as any)
+        .eq("user_id", user.id);
+
+      if (error) {
+        throw error;
+      }
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["myProfile"] });
+      await queryClient.invalidateQueries({ queryKey: ["profiles"] });
     },
   });
 };
