@@ -25,7 +25,7 @@ export default function Page() {
             className="text-xl font-poppins-semibold"
             style={{ color: "#ecac6d" }}
           >
-            Designed to be deleted
+             Match. Build. Grow.
           </Text>
         </View>
         <Link href={"/phone"} asChild>

@@ -182,7 +182,8 @@ export const useUpdateLookingForRoles = () => {
 
   return useMutation({
     mutationFn: async ({ roles }: { roles: string[] }) => {
-      // Get the current user's ID
+      // NOTE: This direct update requires RLS to allow the authenticated user to update their own profile.
+      // If RLS blocks this, you must update your Supabase policies or use an RPC function that supports this field.
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -191,19 +192,29 @@ export const useUpdateLookingForRoles = () => {
         throw new Error("User not authenticated");
       }
 
-      // Update the profile directly using the update method with type assertion
-      const { error } = await supabase
+      console.log("Updating roles:", roles);
+
+      const { error, data } = await supabase
         .from("profiles")
         .update({ looking_for_roles: roles } as any)
-        .eq("user_id", user.id);
+        .eq("user_id", user.id)
+        .select();
 
       if (error) {
+        console.error("Error updating roles:", error);
         throw error;
       }
+
+      console.log("Roles updated successfully:", data);
     },
     onSuccess: async () => {
+      console.log("Invalidating queries...");
       await queryClient.invalidateQueries({ queryKey: ["myProfile"] });
       await queryClient.invalidateQueries({ queryKey: ["profiles"] });
+      console.log("Queries invalidated");
+    },
+    onError: (error) => {
+      console.error("Mutation error:", error);
     },
   });
 };

@@ -193,7 +193,7 @@ export default function ProfilePage() {
                   source={
                     profile?.avatar_url
                       ? { uri: profile.avatar_url }
-                      : require("../../../../assets/images/icon.png")
+                      : require("../../../../assets/images/sync-logo.png")
                   }
                   className="flex-1 rounded-full bg-neutral-400"
                 />
