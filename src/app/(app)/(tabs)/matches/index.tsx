@@ -91,7 +91,12 @@ export default function ConnectionsPage() {
     return (
       <TouchableOpacity
         className="bg-gray-800 p-4 rounded-xl mb-3 flex-row"
-        onPress={() => router.push(`/matches/${item.id}`)}
+        onPress={() =>
+          router.push({
+            pathname: `/matches/${item.id}`,
+            params: { name: item.name },
+          })
+        }
       >
         <View className="h-16 w-16 rounded-full overflow-hidden bg-gray-700 mr-3">
           {item.photo ? (
