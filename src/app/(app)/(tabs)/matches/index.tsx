@@ -1,189 +1,183 @@
-import { useMyProfile } from "@/api/my-profile";
-import { Empty } from "@/components/empty";
-import { Loader } from "@/components/loader";
-import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
+import React from "react";
 import {
   FlatList,
   Image,
-  SafeAreaView,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 
-// Mock data for connections
-const MOCK_CONNECTIONS = [
+const standoutProfiles = [
   {
     id: "1",
-    name: "TechNova",
-    role: "startup",
-    photo: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0",
-    funding: "Series A",
-    lastMessage:
-      "Thanks for connecting! Are you available for a call this week?",
-    timestamp: "10:30 AM",
-    unread: 2,
+    name: "Jess",
+    profileImage: "https://randomuser.me/api/portraits/women/44.jpg",
   },
   {
     id: "2",
-    name: "Alex Johnson",
-    role: "candidate",
-    photo: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5",
-    skills: ["Full Stack", "React", "Node.js"],
-    lastMessage: "Looking forward to discussing the opportunity!",
-    timestamp: "Yesterday",
-    unread: 0,
+    name: "Alex",
+    profileImage: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     id: "3",
-    name: "GreenEarth",
-    role: "startup",
-    photo: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf",
-    funding: "Seed",
-    lastMessage: "Hi there! We'd love to chat more about your experience.",
-    timestamp: "2 days ago",
-    unread: 0,
-  },
-  {
-    id: "4",
-    name: "Jordan Chen",
-    role: "candidate",
-    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2",
-    skills: ["UI/UX", "Figma", "React"],
-    lastMessage: "Thanks for the offer! Let me review the details.",
-    timestamp: "3 days ago",
-    unread: 0,
+    name: "Priya",
+    profileImage: "https://randomuser.me/api/portraits/women/68.jpg",
   },
 ];
 
-export default function ConnectionsPage() {
-  const { data: myProfile, isLoading } = useMyProfile();
-  const [connections, setConnections] = useState<any[]>([]);
-  const [isLoadingConnections, setIsLoadingConnections] = useState(true);
+const connections = [
+  {
+    id: "1",
+    name: "Alex Johnson",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    tags: "Full Stack, React, Node.js",
+    lastMessage: "Looking forward to discussing the opportunity!",
+    timestamp: "Yesterday",
+  },
+  {
+    id: "2",
+    name: "Jordan Chen",
+    avatar: "https://randomuser.me/api/portraits/men/45.jpg",
+    tags: "UI/UX, Figma, React",
+    lastMessage: "Thanks for the offer! Let me review the details.",
+    timestamp: "3 days ago",
+  },
+  {
+    id: "3",
+    name: "Priya Singh",
+    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+    tags: "Product, Agile, Roadmaps",
+    lastMessage: "Let's sync up next week.",
+    timestamp: "5 days ago",
+  },
+];
 
-  const isStartup = myProfile?.user_role === "startup";
-
-  // Fetch connections effect
-  useEffect(() => {
-    // Simulate API fetch
-    setTimeout(() => {
-      setConnections(MOCK_CONNECTIONS);
-      setIsLoadingConnections(false);
-    }, 1000);
-  }, []);
-
-  if (isLoading || isLoadingConnections) {
-    return <Loader />;
-  }
-
-  const renderConnectionItem = ({ item }: { item: any }) => {
-    const isUserStartup = myProfile?.user_role === "startup";
-    const isCounterpartStartup = item.role === "startup";
-
-    // Only show connections relevant to the user
-    // For startups: show candidates, for candidates: show startups
-    if (isUserStartup === isCounterpartStartup) {
-      return null;
-    }
-
-    return (
-      <TouchableOpacity
-        className="bg-gray-800 p-4 rounded-xl mb-3 flex-row"
-        onPress={() =>
-          router.push({
-            pathname: `/matches/${item.id}`,
-            params: { name: item.name },
-          })
-        }
-      >
-        <View className="h-16 w-16 rounded-full overflow-hidden bg-gray-700 mr-3">
-          {item.photo ? (
-            <Image
-              source={{ uri: item.photo }}
-              style={{ width: "100%", height: "100%" }}
-            />
-          ) : (
-            <View className="w-full h-full items-center justify-center">
-              <Ionicons
-                name={isCounterpartStartup ? "business" : "person"}
-                size={24}
-                color="#ecac6d"
-              />
-            </View>
-          )}
-        </View>
-
-        <View className="flex-1 justify-center">
-          <View className="flex-row justify-between items-center">
-            <Text className="text-white font-poppins-medium text-base">
-              {item.name}
-            </Text>
-            <Text className="text-gray-400 text-xs">{item.timestamp}</Text>
-          </View>
-
-          <View className="flex-row items-center mt-1">
-            <Ionicons
-              name={isCounterpartStartup ? "business" : "code-slash"}
-              size={12}
-              color="#8E8E93"
-              style={{ marginRight: 4 }}
-            />
-            <Text className="text-gray-400 text-xs" numberOfLines={1}>
-              {isCounterpartStartup ? item.funding : item.skills?.join(", ")}
-            </Text>
-          </View>
-
-          <Text className="text-gray-300 text-sm mt-1" numberOfLines={1}>
-            {item.lastMessage}
-          </Text>
-        </View>
-
-        {item.unread > 0 && (
-          <View
-            className="h-5 w-5 rounded-full bg-ecac6d items-center justify-center"
-            style={{ backgroundColor: "#ecac6d" }}
-          >
-            <Text className="text-gray-900 text-xs font-bold">
-              {item.unread}
-            </Text>
-          </View>
-        )}
-      </TouchableOpacity>
-    );
-  };
-
-  const filteredConnections = connections.filter(
-    (conn) =>
-      (isStartup && conn.role === "candidate") ||
-      (!isStartup && conn.role === "startup")
-  );
-
+export default function MessagesListScreen() {
+  const router = useRouter();
   return (
-    <SafeAreaView className="flex-1 bg-gray-900">
-      <View className="px-4 pt-2 pb-4">
-        <Text
-          className="text-3xl font-playfair-semibold"
-          style={{ color: "#ecac6d" }}
-        >
-          Connections
-        </Text>
+    <View style={styles.container}>
+      {/* Standouts Section */}
+      <Text style={styles.standoutsTitle}>Standouts</Text>
+      <View style={styles.bubbleRow}>
+        {standoutProfiles.map((profile) => (
+          <TouchableOpacity
+            key={profile.id}
+            style={styles.bubbleContainer}
+            onPress={() =>
+              router.push({
+                pathname: "/(app)/(tabs)/standouts/profile",
+                params: { id: profile.id },
+              })
+            }
+          >
+            <Image
+              source={{ uri: profile.profileImage }}
+              style={styles.bubbleImage}
+            />
+            <Text style={styles.bubbleName}>{profile.name}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
-
-      {filteredConnections.length === 0 ? (
-        <Empty
-          title="No connections yet"
-          subTitle={`When you match with ${isStartup ? "candidates" : "startups"}, you'll be able to message them here.`}
-        />
-      ) : (
-        <FlatList
-          data={connections}
-          renderItem={renderConnectionItem}
-          contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 20 }}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
-    </SafeAreaView>
+      {/* Connections Section */}
+      <Text style={styles.header}>Connections</Text>
+      <FlatList
+        data={connections}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() =>
+              router.push({
+                pathname: "/(app)/(tabs)/matches/chat",
+                params: { id: item.id },
+              })
+            }
+          >
+            <View style={styles.card}>
+              <Image source={{ uri: item.avatar }} style={styles.avatar} />
+              <View style={styles.info}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.tags}>{item.tags}</Text>
+                <Text style={styles.message}>{item.lastMessage}</Text>
+              </View>
+              <Text style={styles.timestamp}>{item.timestamp}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingTop: 0, marginTop: 0 }}
+      />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#181A23",
+    paddingHorizontal: 16,
+    paddingTop: 0,
+  },
+  standoutsTitle: {
+    color: "#F4C087",
+    fontSize: 22,
+    fontWeight: "bold",
+    marginTop: 0,
+    marginBottom: 4,
+    marginLeft: 4,
+    textAlign: "left",
+  },
+  bubbleRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+    marginLeft: 0,
+    minHeight: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  bubbleContainer: {
+    alignItems: "center",
+    marginRight: 12,
+    minWidth: 60,
+  },
+  bubbleImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: "#F4C087",
+  },
+  bubbleName: {
+    color: "#fff",
+    fontSize: 14,
+    marginTop: 4,
+    fontWeight: "500",
+    maxWidth: 60,
+    textAlign: "center",
+  },
+  header: {
+    color: "#F4C087",
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 12,
+    marginTop: 0,
+    marginLeft: 0,
+    textAlign: "left",
+  },
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#23243A",
+    borderRadius: 14,
+    marginVertical: 8,
+    padding: 14,
+  },
+  avatar: { width: 48, height: 48, borderRadius: 24, marginRight: 14 },
+  info: { flex: 1 },
+  name: { color: "#fff", fontSize: 17, fontWeight: "600" },
+  tags: { color: "#B0B4C0", fontSize: 13, marginBottom: 2 },
+  message: { color: "#D9D9D9", fontSize: 14 },
+  timestamp: { color: "#B0B4C0", fontSize: 12, marginLeft: 8 },
+});

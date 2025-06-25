@@ -32,6 +32,7 @@ export default function Layout() {
     <>
       <StatusBar style="light" backgroundColor="#1f2937" />
       <Tabs
+        initialRouteName="standouts"
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
@@ -49,6 +50,15 @@ export default function Layout() {
         }}
       >
         <Tabs.Screen
+          name="standouts"
+          options={{
+            title: "Standouts",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="star" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="index"
           options={{
             title: "Discover",
@@ -58,34 +68,11 @@ export default function Layout() {
           }}
         />
         <Tabs.Screen
-          name="likes"
-          options={{
-            title: "Saved",
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="bookmark" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
           name="matches"
           options={{
             title: "Connections",
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="chatbubbles" size={size} color={color} />
-            ),
-          }}
-        />
-        {/* Show only one profile tab option based on user role */}
-        <Tabs.Screen
-          name={isStartup ? "startup" : "profile"}
-          options={{
-            title: isStartup ? "Dashboard" : "Profile",
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons
-                name={isStartup ? "business" : "person"}
-                size={size}
-                color={color}
-              />
             ),
           }}
         />
