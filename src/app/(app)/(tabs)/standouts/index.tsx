@@ -1,85 +1,281 @@
-import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import React from "react";
+import {
+  Award,
+  Briefcase,
+  Heart,
+  MapPin,
+  MessageCircle,
+  X,
+} from "lucide-react-native";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   Image,
+  Platform,
+  ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
 
-const standouts = [
+const { width, height } = Dimensions.get("window");
+
+interface Profile {
+  id: string;
+  name: string;
+  title: string;
+  company: string;
+  match: string;
+  image: string;
+  age?: number;
+  location?: string;
+  experience: string;
+  skills: string[];
+  achievements: number;
+}
+
+const profiles: Profile[] = [
   {
     id: "1",
-    name: "Jess",
-    tagline: "Creative Developer & Designer",
-    profileImage: "https://randomuser.me/api/portraits/women/44.jpg",
-    compatibility: 8.5,
+    name: "Jessica Chen",
+    title: "Senior Product Designer",
+    company: "Meta",
+    match: "94",
+    image:
+      "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400",
+    age: 28,
+    location: "San Francisco, CA",
+    experience: "6+ years",
+    skills: ["UI/UX", "Figma", "Design Systems"],
+    achievements: 12,
   },
   {
     id: "2",
-    name: "Alex",
-    tagline: "Full Stack Engineer",
-    profileImage: "https://randomuser.me/api/portraits/men/32.jpg",
-    compatibility: 9.2,
+    name: "Alexander Rodriguez",
+    title: "Engineering Manager",
+    company: "Stripe",
+    match: "89",
+    image:
+      "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400",
+    age: 31,
+    location: "New York, NY",
+    experience: "8+ years",
+    skills: ["Leadership", "React", "Node.js"],
+    achievements: 18,
   },
   {
     id: "3",
-    name: "Priya",
-    tagline: "Product Manager",
-    profileImage: "https://randomuser.me/api/portraits/women/68.jpg",
-    compatibility: 7.8,
+    name: "Priya Sharma",
+    title: "VP of Product",
+    company: "Airbnb",
+    match: "91",
+    image:
+      "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
+    age: 29,
+    location: "Seattle, WA",
+    experience: "7+ years",
+    skills: ["Strategy", "Analytics", "Growth"],
+    achievements: 15,
   },
 ];
 
-const CARD_HEIGHT = Math.floor(Dimensions.get("window").height * 0.18);
-const PROFILE_IMG_SIZE = 60;
-
-export default function StandoutsScreen() {
+function ProfileCard({ profile, index }: { profile: Profile; index: number }) {
+  const translateY = useSharedValue(100);
+  const opacity = useSharedValue(0);
+  const scale = useSharedValue(0.8);
+  const [isPressed, setIsPressed] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    translateY.value = withDelay(
+      index * 200,
+      withSpring(0, {
+        damping: 15,
+        stiffness: 100,
+      })
+    );
+    opacity.value = withDelay(index * 200, withTiming(1, { duration: 800 }));
+    scale.value = withDelay(
+      index * 200,
+      withSpring(1, {
+        damping: 12,
+        stiffness: 120,
+      })
+    );
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translateY.value }, { scale: scale.value }],
+      opacity: opacity.value,
+    };
+  });
+
+  const handleMessage = () => {
+    router.push({
+      pathname: "/(app)/(tabs)/matches/[id]",
+      params: { id: profile.id, name: profile.name },
+    });
+  };
+
+  const handleLike = () => {
+    console.log(`Connect with ${profile.name}`);
+  };
+
+  const handlePass = () => {
+    console.log(`Pass ${profile.name}`);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>STANDOUTS</Text>
-      {standouts.map((item, idx) => (
-        <TouchableOpacity
-          key={item.id}
-          style={[styles.card, { marginTop: idx === 0 ? 12 : 0 }]}
-          activeOpacity={0.85}
-          onPress={() =>
-            router.push({
-              pathname: "/(app)/(tabs)/standouts/profile",
-              params: { id: item.id },
-            })
-          }
+    <Animated.View style={[styles.cardContainer, animatedStyle]}>
+      <View style={styles.card}>
+        <LinearGradient
+          colors={["#F4E0CC", "#ffffff"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.cardGradient}
         >
-          <View style={styles.profileImgWrapper}>
-            <Image
-              source={{ uri: item.profileImage }}
-              style={styles.profileImg}
-            />
+          {/* Header Section */}
+          <View style={styles.cardHeader}>
+            <View style={styles.profileImageContainer}>
+              <Image
+                source={{ uri: profile.image }}
+                style={styles.profileImage}
+              />
+              <View style={styles.matchBadge}>
+                <Text style={styles.matchText}>{profile.match}%</Text>
+              </View>
+            </View>
+
+            <View style={styles.profileInfo}>
+              <Text style={styles.profileName}>{profile.name}</Text>
+              <Text style={styles.profileTitle}>{profile.title}</Text>
+              <View style={styles.companyContainer}>
+                <Briefcase size={14} color="#FA6739" />
+                <Text style={styles.companyText}>{profile.company}</Text>
+              </View>
+            </View>
           </View>
-          <View style={styles.cardContent}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.tagline}>{item.tagline}</Text>
-            <Text style={styles.compatibility}>
-              Match: {item.compatibility}/10
-            </Text>
+
+          {/* Details Section */}
+          <View style={styles.detailsSection}>
+            <View style={styles.detailRow}>
+              <MapPin size={16} color="#666666" />
+              <Text style={styles.detailText}>{profile.location}</Text>
+            </View>
+            <View style={styles.detailRow}>
+              <Award size={16} color="#666666" />
+              <Text style={styles.detailText}>
+                {profile.experience} • {profile.achievements} achievements
+              </Text>
+            </View>
+          </View>
+
+          {/* Skills Section */}
+          <View style={styles.skillsSection}>
+            <Text style={styles.skillsTitle}>Key Skills</Text>
+            <View style={styles.skillsContainer}>
+              {profile.skills.map((skill, skillIndex) => (
+                <View key={skillIndex} style={styles.skillTag}>
+                  <Text style={styles.skillText}>{skill}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          {/* Action Buttons */}
+          <View style={styles.actionButtons}>
             <TouchableOpacity
-              style={styles.messageButton}
-              onPress={() =>
-                router.push({
-                  pathname: "/(app)/(tabs)/matches/chat",
-                  params: { id: item.id },
-                })
-              }
+              style={[styles.actionButton, styles.passButton]}
+              onPress={handlePass}
+              activeOpacity={0.8}
             >
-              <Ionicons name="chatbubble-ellipses" size={22} color="#F4C087" />
+              <X size={22} color="#FF595A" strokeWidth={2.5} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.actionButton, styles.messageButton]}
+              onPress={handleMessage}
+              activeOpacity={0.8}
+            >
+              <MessageCircle
+                size={32}
+                color="#fff"
+                fill="#000"
+                strokeWidth={2.5}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.actionButton, styles.likeButton]}
+              onPress={handleLike}
+              activeOpacity={0.8}
+            >
+              <Heart
+                size={22}
+                color="#FFA46A"
+                fill="#FFA46A"
+                strokeWidth={2.5}
+              />
             </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      ))}
+        </LinearGradient>
+      </View>
+    </Animated.View>
+  );
+}
+
+export default function StandoutsScreen() {
+  const headerOpacity = useSharedValue(0);
+  const headerTranslateY = useSharedValue(-30);
+
+  useEffect(() => {
+    headerOpacity.value = withTiming(1, { duration: 1000 });
+    headerTranslateY.value = withSpring(0, {
+      damping: 15,
+      stiffness: 100,
+    });
+  }, []);
+
+  const headerAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: headerOpacity.value,
+      transform: [{ translateY: headerTranslateY.value }],
+    };
+  });
+
+  return (
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
+      <LinearGradient
+        colors={["#000000", "#1a1a1a", "#2a2a2a"]}
+        style={styles.background}
+      />
+
+      <Animated.View style={[styles.header, headerAnimatedStyle]}>
+        <Text style={styles.logo}>STANDOUTS</Text>
+        <Text style={styles.subtitle}>Connect with industry leaders</Text>
+      </Animated.View>
+
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {profiles.map((profile, index) => (
+          <ProfileCard key={profile.id} profile={profile} index={index} />
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -87,77 +283,190 @@ export default function StandoutsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#12122b",
-    paddingHorizontal: 16,
-    paddingTop: 18,
+    backgroundColor: "#000000",
+  },
+  background: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
   header: {
-    color: "#ffb96a",
+    paddingTop: Platform.OS === "ios" ? 60 : 40,
+    paddingHorizontal: 24,
+    paddingBottom: 24,
+    alignItems: "center",
+  },
+  logo: {
     fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 35,
-    textAlign: "center",
-    letterSpacing: 1,
+    fontFamily: "playfair-bold",
+    color: "#FFA46A",
+    letterSpacing: 3,
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#999999",
+    fontFamily: "poppins-regular",
+    letterSpacing: 0.5,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 120,
+  },
+  cardContainer: {
+    marginBottom: 24,
   },
   card: {
-    backgroundColor: "#23234a",
-    borderRadius: 24,
-    alignItems: "center",
-    marginBottom: 65,
-    minHeight: CARD_HEIGHT,
-    justifyContent: "flex-start",
+    borderRadius: 20,
+    overflow: "hidden",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.18,
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+  cardGradient: {
+    padding: 24,
+  },
+  cardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  profileImageContainer: {
+    position: "relative",
+    marginRight: 16,
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 3,
+    borderColor: "#FFA46A",
+  },
+  matchBadge: {
+    position: "absolute",
+    top: -8,
+    right: -8,
+    backgroundColor: "#FA6739",
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderWidth: 2,
+    borderColor: "#ffffff",
+  },
+  matchText: {
+    color: "#ffffff",
+    fontSize: 12,
+    fontFamily: "poppins-bold",
+  },
+  profileInfo: {
+    flex: 1,
+  },
+  profileName: {
+    fontSize: 24,
+    fontFamily: "playfair-bold",
+    color: "#000000",
+    marginBottom: 4,
+  },
+  profileTitle: {
+    fontSize: 16,
+    color: "#333333",
+    fontFamily: "poppins-medium",
+    marginBottom: 6,
+  },
+  companyContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  companyText: {
+    fontSize: 14,
+    color: "#FA6739",
+    fontFamily: "poppins-semibold",
+  },
+  detailsSection: {
+    marginBottom: 20,
+    gap: 8,
+  },
+  detailRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  detailText: {
+    fontSize: 14,
+    color: "#666666",
+    fontFamily: "poppins-regular",
+  },
+  skillsSection: {
+    marginBottom: 24,
+  },
+  skillsTitle: {
+    fontSize: 16,
+    fontFamily: "poppins-semibold",
+    color: "#000000",
+    marginBottom: 12,
+  },
+  skillsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  skillTag: {
+    backgroundColor: "#FFA46A",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+  },
+  skillText: {
+    fontSize: 12,
+    color: "#000000",
+    fontFamily: "poppins-medium",
+  },
+  actionButtons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 24,
+  },
+  actionButton: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 4,
-    position: "relative",
-    overflow: "visible",
   },
-  profileImgWrapper: {
-    position: "absolute",
-    top: -PROFILE_IMG_SIZE / 2,
-    left: "50%",
-    marginLeft: -PROFILE_IMG_SIZE / 2,
-    zIndex: 2,
-    backgroundColor: "#23234a",
-    borderRadius: PROFILE_IMG_SIZE / 2,
-    padding: 4,
-    borderWidth: 3,
-    borderColor: "#ffb96a",
+  passButton: {
+    backgroundColor: "#ffffff",
+    borderWidth: 2,
+    borderColor: "#FF595A",
   },
-  profileImg: {
-    width: PROFILE_IMG_SIZE,
-    height: PROFILE_IMG_SIZE,
-    borderRadius: PROFILE_IMG_SIZE / 2,
-  },
-  cardContent: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: PROFILE_IMG_SIZE / 2 + 12,
-    width: "100%",
-    paddingHorizontal: 12,
-  },
-  name: { color: "#fff", fontSize: 24, fontWeight: "bold", marginTop: 40 },
-  tagline: {
-    color: "#cfcfcf",
-    fontSize: 16,
-    marginTop: 10,
-    textAlign: "center",
-  },
-  compatibility: { color: "#ffb96a", fontSize: 16, marginTop: 8 },
   messageButton: {
-    marginTop: 4,
-    backgroundColor: "#181A23",
-    borderRadius: 16,
-    padding: 7,
+    backgroundColor: "#000000",
+    borderWidth: 2,
+    borderColor: "#000000",
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    shadowRadius: 4,
-    elevation: 2,
+  },
+  likeButton: {
+    backgroundColor: "#ffffff",
+    borderWidth: 2,
+    borderColor: "#FFA46A",
   },
 });
